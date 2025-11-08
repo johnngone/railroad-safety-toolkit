@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grade Crossing Toolkit — Ped & Bike (Offline)</title>
+<style>
+:root{
+  --scarlet:#CC0033;
+  --bikeGreen:#2E7D32;
+  --blue:#0B4F9C;
+  --gray:#6D6E71;
+  --bg:#F7F8FA;
+  --text:#1B1F23;
+  --card:#FFFFFF;
+  --border:#E3E7EE;
+  --mark:#fff29a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif}
+a{color:var(--blue);text-decoration:none}
+a:focus,button:focus,input:focus,select:focus,summary:focus{outline:3px solid #99c2ff;outline-offset:2px}
+mark[data-h]{background:var(--mark);padding:0 .05em;border-radius:.2em}
+.hidden{display:none!important}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.btn{display:inline-block;padding:.55rem .85rem;border:1px solid var(--blue);border-radius:10px;background:var(--blue);color:#fff;cursor:pointer;font-weight:700}
+.btn.secondary{background:#fff;color:var(--blue)}
+.btn.ghost{background:#fff;border-color:#c8cdd4;color:#333}
+.badge{display:inline-block;border:1px solid #cfe0ff;background:#eef3ff;color:#193a7a;border-radius:999px;padding:.1rem .45rem;font-size:.8rem}
+.header{
+  position:sticky;top:0;z-index:40;background:var(--scarlet);color:#fff;border-bottom:3px solid #a20028
+}
+.header .wrap{max-width:1400px;margin:0 auto;padding:.6rem 1rem;display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.header a{color:#fff;text-decoration:underline}
+.header .flag{font-size:1.15rem;margin-left:.25rem}
+.main{
+  max-width:1400px;margin:0 auto;display:grid;grid-template-columns:280px 1fr;gap:1rem;padding:1rem;
+}
+@media (max-width: 960px){
+  .main{grid-template-columns:1fr}
+  .sidebar{position:fixed;inset:0 40% 0 0;max-width:420px;transform:translateX(-105%);transition:transform .2s ease;z-index:50}
+  .sidebar.open{transform:none}
+  .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(1px);display:none;z-index:45}
+  .backdrop.show{display:block}
+  .filter-toggle{display:inline-flex}
+}
+@media (min-width: 961px){
+  .filter-toggle{display:none}
+}
+.sidebar{
+  background:#fff;border:1px solid var(--border);border-radius:14px;padding:1rem;height:calc(100dvh - 110px);position:sticky;top:84px;overflow:auto
+}
+.logo{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem}
+.logo img{width:40px;height:40px;object-fit:contain;border-radius:8px;border:1px solid #eee;background:#fff}
+.field{margin-bottom:.75rem}
+.field label{font-weight:700;display:block;margin-bottom:.35rem}
+.input{width:100%;padding:.55rem .7rem;border:1px solid #c8cdd4;border-radius:10px}
+fieldset{border:1px dashed #d5dbe4;border-radius:12px;padding:.65rem .8rem;margin:0 0 .7rem}
+legend{font-weight:700;color:#333;padding:0 .35rem}
+.checkbox{display:flex;align-items:center;gap:.45rem;margin:.3rem 0}
+.mainpane{min-height:60vh}
+.acc{margin-bottom:.8rem;border-radius:12px;overflow:hidden;border:1px solid #bcd6c2}
+.acc > h3{margin:0}
+.acc > h3 button{
+  width:100%;text-align:left;padding:.75rem .9rem;background:var(--bikeGreen);color:#fff;font-size:1rem;font-weight:800;border:0;cursor:pointer;display:flex;align-items:center;justify-content:space-between
+}
+.acc > div{padding:.75rem;background:#fff}
+.empty{padding:1rem;border:1px dashed #d7dbe3;border-radius:12px;background:#fff}
+.topic{border:1px solid var(--border);border-radius:12px;padding:.75rem;margin:.7rem 0}
+.topic .title{display:flex;align-items:center;gap:.5rem;margin:0 0 .35rem 0}
+.topic .meta{color:#555;font-size:.85rem}
+.tabs{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.4rem}
+.tab{border:1px solid #d3d7df;background:#f4f6fb;border-radius:999px;padding:.3rem .6rem;cursor:pointer}
+.tab[aria-selected="true"]{background:#e6f0ff;border-color:#93b6ff}
+.tabpan{border-top:1px dashed #e0e4ea;margin-top:.5rem;padding-top:.6rem}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.6rem}
+figure{margin:0;border:1px solid #eee;border-radius:10px;overflow:hidden;background:#fafafa}
+figure img{width:100%;display:block}
+figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.filter-toggle{border:1px solid #fff;background:transparent;color:#fff;padding:.35rem .6rem;border-radius:8px;cursor:pointer}
+.small{font-size:.9rem}
+.hr{height:1px;background:#e3e7ee;margin:.6rem 0}
+.count{font-weight:700}
+</style>
+</head>
+<body>
+  <header class="header" role="banner">
+    <div class="wrap">
+      <div>
+        Created with ❤️ by <strong>John Ng, E.I.T.</strong> in fulfillment of requirements of
+        <strong>34:970:556 Bicycle and Pedestrian Planning</strong> with <strong>Dr. Kelcie Ralph</strong> |
+        Homage to the official USDOT FRA Grade Crossing Toolkit
+        (<a href="https://gradecrossingtoolkit.fra.dot.gov/" target="_blank" rel="noopener">link</a>)
+        <span class="flag" aria-hidden="true">🇺🇸</span>
+      </div>
+      <div class="topbar">
+        <button class="filter-toggle" id="toggleFilters" aria-controls="sidebar" aria-expanded="false">Filters</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="main">
+    <aside class="sidebar card" id="sidebar" aria-label="Filters">
+      <div class="logo">
+        <img src="logo.png" alt="Site logo" onerror="this.style.display='none'">
+        <div><strong>Ped & Bike Toolkit</strong><div class="small" style="color:var(--gray)">Offline Template</div></div>
+      </div>
+
+      <div class="field">
+        <label for="kw">Custom Keyword</label>
+        <div style="display:flex;gap:.4rem">
+          <input id="kw" class="input" type="search" placeholder="Search…" aria-label="Search">
+          <button id="go" class="btn">Go</button>
+        </div>
+        <div class="small" style="margin-top:.3rem;color:#555">Case-insensitive; highlights results in yellow.</div>
+      </div>
+
+      <fieldset id="utFieldset">
+        <legend>User Type</legend>
+        <!-- dynamic checkboxes here -->
+      </fieldset>
+
+      <fieldset id="itFieldset">
+        <legend>Intervention Type</legend>
+        <!-- dynamic checkboxes here -->
+      </fieldset>
+
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn secondary" id="clear">Clear filters</button>
+        <span class="small" id="matchCount" aria-live="polite"></span>
+      </div>
+
+      <div class="hr"></div>
+      <div class="small">Tip: Use filters + keyword to narrow results. State syncs with the URL hash.</div>
+    </aside>
+
+    <main class="mainpane">
+      <div id="accordions"></div>
+      <div id="emptyAll" class="empty hidden" role="note">No topics match the current filters/search.</div>
+    </main>
+  </div>
+
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+
+  <!-- Embedded data -->
+  <script type="application/json" id="data">
+  {
+    "topics": [
+      {
+        "id": "gate-skirts",
+        "title": "Gate Skirts",
+        "userType": "Pedestrian",
+        "interventionType": "Physical Barriers",
+        "description": "Extra gates to prevent Ducking",
+        "notablePractices": "-",
+        "advantages": "Low Cost",
+        "drawbacks": "Extra Maintenance",
+        "images": [{"src":"assets/trail-gate.jpg","alt":"Staggered gates on trail","caption":"Typical layout"}],
+        "references": "",
+        "relatedMeasures": ["active-warning-device"]
+      },
+      {
+        "id": "active-warning-device",
+        "title": "Active Warning for Trails/Sidewalks",
+        "userType": "Pedestrian",
+        "interventionType": "Warning Devices",
+        "description": "Install **flashing beacons** or integrated warning at sidepath approaches synchronized with train detection.",
+        "notablePractices": "- Coordinate with rail signal maintainer\\n- Provide clear sight triangle\\n- Pair with channelization where needed",
+        "advantages": "- High conspicuity\\n- Supports visually-impaired users with audible options",
+        "drawbacks": "- Higher capital & maintenance cost\\n- Requires power & interconnect",
+        "images": [{"src":"assets/beacon.jpg","alt":"Sidepath beacon","caption":"Flashing beacon example"}],
+        "references": "TBD",
+        "relatedMeasures": ["trail-gates","path-detect-light"]
+      },
+      {
+        "id": "school-outreach",
+        "title": "School Outreach Campaign",
+        "userType": "Pedestrian",
+        "interventionType": "Outreach and Education",
+        "description": "Develop age-appropriate **education** modules on rail safety for nearby schools.",
+        "notablePractices": "- Coordinate with district calendar\\n- Include near-miss reporting info",
+        "advantages": "- Builds long-term safety culture",
+        "drawbacks": "- Impact may be diffuse without reinforcement",
+        "images": [],
+        "references": "Operation Lifesaver.",
+        "relatedMeasures": []
+      },
+	  {
+        "id": "social-media",
+        "title": "Social Media Outreach Campaign",
+        "userType": "Pedestrian",
+        "interventionType": "Outreach and Education",
+        "description": "Post targetted ads.",
+        "notablePractices": "- Coordinate with social media companies.",
+        "advantages": "- Builds long-term safety culture",
+        "drawbacks": "- Impact may be diffuse without reinforcement",
+        "images": [],
+        "references": "Operation Lifesaver.",
+        "relatedMeasures": []
+      },
+      {
+        "id": "path-realignment",
+        "title": "Shared-Use Path Realignment",
+        "userType": "Bicycle",
+        "interventionType": "Infrastructure Modifications",
+        "description": "Realign the shared-use path to meet tracks at ~**90°** and improve sight distance.",
+        "notablePractices": "- Provide pavement markings\\n- Consider superelevation transitions",
+        "advantages": "- Improves visibility and comfort",
+        "drawbacks": "- Right-of-way and cost impacts",
+        "images": [],
+        "references": "TBD.",
+        "relatedMeasures": ["trail-gates"]
+      }
+    ]
+  }
+  </script>
+
+  <script>
+  // --- Utilities -------------------------------------------------------------
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  const uniq = arr => Array.from(new Set(arr));
+  const by = key => (a,b)=> String(a[key]).localeCompare(String(b[key]));
+
+  // Escape HTML, then apply a tiny markdown subset safely
+  function mdToHtml(md){
+    if(!md) return "";
+    const esc = md
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    // links [text](url) allow http(s), mailto, #
+    const links = esc.replace(/\[([^\]]+)\]\(([^)]+)\)/g,(m,t,u)=>{
+      if(!/^((https?:)|mailto:|#)/i.test(u)) return t;
+      const safe = u.replace(/"/g,'%22');
+      return `<a href="${safe}" target="_blank" rel="noopener">${t}</a>`;
+    });
+
+    // bold **x**, italics *x*
+    const strong = links.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+    const em = strong.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g,'$1<em>$2</em>');
+
+    // code `x`
+    const code = em.replace(/`([^`]+)`/g,'<code>$1</code>');
+
+    // headings #, ##, ###
+    const lines = code.split(/\n/).map(l=>{
+      if(/^###\s+/.test(l)) return '<h3>'+l.replace(/^###\s+/,'')+'</h3>';
+      if(/^##\s+/.test(l)) return '<h2>'+l.replace(/^##\s+/,'')+'</h2>';
+      if(/^#\s+/.test(l)) return '<h1>'+l.replace(/^#\s+/,'')+'</h1>';
+      return l;
+    }).join('\n');
+
+    // unordered lists
+    const listified = lines
+      .replace(/(^|\n)([-*]\s.+(\n[-*]\s.+)+)/g, (m,pre,blk)=>{
+        const items = blk.split('\n').map(x=>x.replace(/^[-*]\s+/,'').trim())
+          .map(x=>`<li>${x}</li>`).join('');
+        return `${pre}<ul>${items}</ul>`;
+      });
+
+    // paragraphs
+    return listified.replace(/(?:\n){2,}/g,'</p><p>').replace(/^([\s\S]+)$/,'<p>$1</p>');
+  }
+
+  // Text highlight across text nodes (avoids tagging inside HTML tags)
+  function clearHighlights(root){
+    $$('.markwrap, mark[data-h]', root).forEach(el=>{
+      const p = el.parentNode;
+      if(!p) return;
+      const txt = document.createTextNode(el.textContent);
+      p.replaceChild(txt, el);
+      p.normalize();
+    });
+  }
+  function highlightTerm(root, term){
+    if(!term) return;
+    const re = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node){
+        if(!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        if(node.parentElement && ['SCRIPT','STYLE','CODE'].includes(node.parentElement.tagName)) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = [];
+    while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(node=>{
+      const frag = document.createDocumentFragment();
+      let last=0, m;
+      const text = node.nodeValue;
+      while((m = re.exec(text))){
+        const {index} = m;
+        if(index>last) frag.appendChild(document.createTextNode(text.slice(last,index)));
+        const mark = document.createElement('mark');
+        mark.setAttribute('data-h','');
+        mark.textContent = m[0];
+        frag.appendChild(mark);
+        last = index + m[0].length;
+      }
+      if(last===0) return;
+      if(last<text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+
+  // Debounce
+  const debounce = (fn, ms=150)=>{ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms);} };
+
+  // --- State ----------------------------------------------------------------
+  const DATA = JSON.parse($('#data').textContent).topics;
+  const STATE = {
+    search:'',  // keyword
+    utSel: new Set(), // user type filter
+    itSel: new Set(), // intervention type filter
+    openIT: new Set(), // open accordions = intervention types
+    activeTabs: {} // topicId -> tabName
+  };
+
+  // --- Build Filters ---------------------------------------------------------
+  const users = uniq(DATA.map(t=>t.userType)).sort();
+  const types = uniq(DATA.map(t=>t.interventionType)).sort();
+  function renderFilterCheckboxes(){
+    const utBox = $('#utFieldset'); utBox.innerHTML = '<legend>User Type</legend>';
+    users.forEach(u=>{
+      const id = 'ut_'+u.replace(/\W+/g,'');
+      const wrap = document.createElement('label'); wrap.className='checkbox';
+      wrap.innerHTML = `<input type="checkbox" id="${id}" value="${u}"><span>${u}</span>`;
+      utBox.appendChild(wrap);
+      wrap.querySelector('input').addEventListener('change', ()=>{
+        if(wrap.querySelector('input').checked) STATE.utSel.add(u); else STATE.utSel.delete(u);
+        syncHash(); renderAccordions();
+      });
+    });
+
+    const itBox = $('#itFieldset'); itBox.innerHTML = '<legend>Intervention Type</legend>';
+    types.forEach(u=>{
+      const id = 'it_'+u.replace(/\W+/g,'');
+      const wrap = document.createElement('label'); wrap.className='checkbox';
+      wrap.innerHTML = `<input type="checkbox" id="${id}" value="${u}"><span>${u}</span>`;
+      itBox.appendChild(wrap);
+      wrap.querySelector('input').addEventListener('change', ()=>{
+        if(wrap.querySelector('input').checked) STATE.itSel.add(u); else STATE.itSel.delete(u);
+        syncHash(); renderAccordions();
+      });
+    });
+  }
+
+  // --- Search ----------------------------------------------------------------
+  const onSearch = ()=>{
+    STATE.search = $('#kw').value.trim();
+    syncHash(); renderAccordions();
+  };
+  $('#go').addEventListener('click', onSearch);
+  $('#kw').addEventListener('input', debounce(onSearch,150));
+
+  // --- Clear filters ---------------------------------------------------------
+  $('#clear').addEventListener('click', ()=>{
+    STATE.search = '';
+    STATE.utSel.clear(); STATE.itSel.clear();
+    $('#kw').value = '';
+    $$('#utFieldset input, #itFieldset input').forEach(i=>i.checked=false);
+    syncHash(); renderAccordions();
+  });
+
+  // --- Filter logic ----------------------------------------------------------
+  function matchFilters(topic){
+    const utOK = (STATE.utSel.size===0) || STATE.utSel.has(topic.userType);
+    const itOK = (STATE.itSel.size===0) || STATE.itSel.has(topic.interventionType);
+    if(!utOK || !itOK) return false;
+    if(!STATE.search) return true;
+    const blob = [
+      topic.title, topic.userType, topic.interventionType,
+      topic.description, topic.notablePractices, topic.advantages,
+      topic.drawbacks, topic.references, (topic.relatedMeasures||[]).join(' ')
+    ].join(' ').toLowerCase();
+    return blob.includes(STATE.search.toLowerCase());
+  }
+
+  // --- Accordions + Topics ---------------------------------------------------
+  function groupByIT(list){
+    const m = new Map();
+    list.forEach(t=>{
+      const k=t.interventionType;
+      if(!m.has(k)) m.set(k, []);
+      m.get(k).push(t);
+    });
+    [...m.values()].forEach(arr=>arr.sort(by('title')));
+    return m;
+  }
+
+  function renderAccordions(){
+    const root = $('#accordions'); root.innerHTML='';
+    const filtered = DATA.filter(matchFilters);
+    const grouped = groupByIT(filtered);
+    let totalCount = 0;
+
+    types.forEach(type=>{
+      const items = grouped.get(type) || [];
+      totalCount += items.length;
+      if(items.length===0) return; // hide empty groups
+
+      const sec = document.createElement('section'); sec.className='acc card'; sec.id = 'it_'+type.replace(/\W+/g,'');
+      const isOpen = STATE.openIT.has(type);
+      sec.innerHTML = `
+        <h3>
+          <button aria-expanded="${isOpen}" aria-controls="${sec.id}_p" data-type="${type}">
+            <span>${type}</span>
+            <span class="badge"><span class="count">${items.length}</span></span>
+          </button>
+        </h3>
+        <div id="${sec.id}_p" role="region" aria-labelledby="${sec.id}_h" ${isOpen?'':'class="hidden"'}></div>
+      `;
+      root.appendChild(sec);
+
+      // Toggle
+      const btn = $('button', sec);
+      btn.addEventListener('click', ()=>{
+        const open = btn.getAttribute('aria-expanded')==='true';
+        btn.setAttribute('aria-expanded', String(!open));
+        const panel = $('#'+sec.id+'_p');
+        panel.classList.toggle('hidden', open);
+        if(!open){ STATE.openIT.add(type); ensureRendered(panel, items); applyHighlights(panel); }
+        else { STATE.openIT.delete(type); }
+        syncHash();
+      });
+
+      // Initial render if open
+      if(isOpen){
+        const panel = $('#'+sec.id+'_p');
+        ensureRendered(panel, items);
+      }
+    });
+
+    $('#emptyAll').classList.toggle('hidden', totalCount>0);
+    $('#matchCount').textContent = totalCount ? `${totalCount} topic${totalCount!==1?'s':''} match` : '0 matches';
+
+    // Highlights everywhere (for already-open panels)
+    $$('.acc > div:not(.hidden)').forEach(p=>{ clearHighlights(p); applyHighlights(p); });
+  }
+
+  function ensureRendered(panel, items){
+    if(panel.dataset.rendered) { // re-render to reflect search highlights and filters
+      panel.innerHTML=''; panel.dataset.rendered='';
+    }
+    items.forEach(t=>panel.appendChild(renderTopic(t)));
+    panel.dataset.rendered='1';
+    applyHighlights(panel);
+  }
+
+  function renderTopic(t){
+    const wrap = document.createElement('article'); wrap.className='topic'; wrap.id='topic_'+t.id;
+    const tabList = ['Description','Notable Practices','Advantages','Drawbacks','Images','References','Related Measures'];
+    const active = STATE.activeTabs[t.id] || 'Description';
+
+    // Tabs header
+    const tabs = tabList.map(name=>{
+      const sel = name===active;
+      return `<button class="tab" role="tab" aria-selected="${sel}" aria-controls="panel_${t.id}_${name.replace(/\s+/g,'_')}" id="tab_${t.id}_${name.replace(/\s+/g,'_')}" data-topic="${t.id}" data-tab="${name}" tabindex="${sel?'0':'-1'}">${name}</button>`;
+    }).join('');
+
+    // Panels
+    const panels = {
+      'Description': mdToHtml(t.description),
+      'Notable Practices': mdToHtml(t.notablePractices),
+      'Advantages': mdToHtml(t.advantages),
+      'Drawbacks': mdToHtml(t.drawbacks),
+      'Images': (t.images||[]).length? `<div class="gallery">`+t.images.map(img=>
+        `<figure><img src="${img.src}" alt="${img.alt||''}"><figcaption>${(img.caption||'')}</figcaption></figure>`
+      ).join('')+`</div>` : '<p><em>No images provided.</em></p>',
+      'References': mdToHtml(t.references),
+      'Related Measures': (t.relatedMeasures||[]).length? `<ul>`+t.relatedMeasures.map(id=>{
+        const found = DATA.find(x=>x.id===id);
+        if(!found) return '';
+        return `<li><a href="#topic_${id}" data-jump="${id}">${found.title}</a></li>`;
+      }).join('')+`</ul>` : '<p><em>None listed.</em></p>'
+    };
+
+    const panelHtml = tabList.map(name=>{
+      const open = name===active;
+      return `<div id="panel_${t.id}_${name.replace(/\s+/g,'_')}" class="tabpan" role="tabpanel" aria-labelledby="tab_${t.id}_${name.replace(/\s+/g,'_')}" ${open?'':'hidden'}>${panels[name]}</div>`;
+    }).join('');
+
+    wrap.innerHTML = `
+      <h4 class="title"><span>${t.title}</span> <span class="meta">· ${t.userType} · ${t.interventionType}</span></h4>
+      <div class="tabs" role="tablist" aria-label="Topic tabs for ${t.title}">
+        ${tabs}
+      </div>
+      ${panelHtml}
+    `;
+
+    // Tab behavior
+    const tabEls = $$('.tab', wrap);
+    const panEls = $$('.tabpan', wrap);
+
+    function setActive(name){
+      STATE.activeTabs[t.id]=name;
+      tabEls.forEach(btn=>{
+        const sel = btn.dataset.tab===name;
+        btn.setAttribute('aria-selected', String(sel));
+        btn.tabIndex = sel?0:-1;
+      });
+      panEls.forEach(p=>{
+        p.hidden = !p.id.endsWith(name.replace(/\s+/g,'_'));
+      });
+      syncHash();
+      applyHighlights(wrap);
+    }
+
+    tabEls.forEach(btn=>{
+      btn.addEventListener('click', ()=> setActive(btn.dataset.tab));
+      btn.addEventListener('keydown', (e)=>{
+        const idx = tabEls.indexOf(document.activeElement);
+        if(['ArrowRight','ArrowLeft','Home','End'].includes(e.key)){
+          e.preventDefault();
+          let n = idx;
+          if(e.key==='ArrowRight') n = (idx+1)%tabEls.length;
+          if(e.key==='ArrowLeft') n = (idx-1+tabEls.length)%tabEls.length;
+          if(e.key==='Home') n = 0;
+          if(e.key==='End') n = tabEls.length-1;
+          tabEls[n].focus();
+          setActive(tabEls[n].dataset.tab);
+        }
+      });
+    });
+
+    // Related-jump open parent accordion & select default tab
+    wrap.addEventListener('click', (e)=>{
+      const a = e.target.closest('a[data-jump]');
+      if(!a) return;
+      e.preventDefault();
+      const id = a.getAttribute('data-jump');
+      // Find its intervention group and open it
+      const topic = DATA.find(x=>x.id===id);
+      if(topic){
+        STATE.openIT.add(topic.interventionType);
+        syncHash();
+        renderAccordions();
+        const target = document.getElementById('topic_'+id);
+        if(target){ target.scrollIntoView({behavior:'smooth',block:'start'}) }
+      }
+    });
+
+    return wrap;
+  }
+
+  // Apply current search highlights within a root
+  function applyHighlights(root){
+    clearHighlights(root);
+    const term = STATE.search.trim();
+    if(term) highlightTerm(root, term);
+  }
+
+  // --- URL hash sync ---------------------------------------------------------
+  function syncHash(){
+    // Serialize sets and tab map into a compact hash
+    const q = new URLSearchParams();
+    if(STATE.search) q.set('q', STATE.search);
+    if(STATE.utSel.size) q.set('ut', [...STATE.utSel].join(','));
+    if(STATE.itSel.size) q.set('it', [...STATE.itSel].join(','));
+    if(STATE.openIT.size) q.set('open', [...STATE.openIT].join(','));
+    const tabs = Object.keys(STATE.activeTabs).map(k=>`${encodeURIComponent(k)}:${encodeURIComponent(STATE.activeTabs[k])}`);
+    if(tabs.length) q.set('tabs', tabs.join('|'));
+    const hash = q.toString();
+    if(location.hash.slice(1)!==hash) history.replaceState(null,'','#'+hash);
+  }
+  function loadHash(){
+    const q = new URLSearchParams(location.hash.slice(1));
+    STATE.search = q.get('q')||'';
+    STATE.utSel = new Set((q.get('ut')||'').split(',').filter(Boolean));
+    STATE.itSel = new Set((q.get('it')||'').split(',').filter(Boolean));
+    STATE.openIT = new Set((q.get('open')||'').split(',').filter(Boolean));
+    STATE.activeTabs = {};
+    (q.get('tabs')||'').split('|').forEach(pair=>{
+      if(!pair) return;
+      const [k,v] = pair.split(':').map(decodeURIComponent);
+      if(k && v) STATE.activeTabs[k]=v;
+    });
+
+    $('#kw').value = STATE.search;
+    // reflect checkboxes
+    $$('#utFieldset input').forEach(i=>{ i.checked = STATE.utSel.has(i.value); });
+    $$('#itFieldset input').forEach(i=>{ i.checked = STATE.itSel.has(i.value); });
+  }
+  window.addEventListener('hashchange', ()=>{ loadHash(); renderAccordions(); });
+
+  // --- Sidebar toggle on mobile ---------------------------------------------
+  const sidebar = $('#sidebar'), backdrop = $('#backdrop'), toggleBtn = $('#toggleFilters');
+  const toggleSidebar = (open)=>{
+    sidebar.classList.toggle('open', open);
+    backdrop.classList.toggle('show', open);
+    toggleBtn.setAttribute('aria-expanded', String(open));
+  };
+  toggleBtn.addEventListener('click', ()=> toggleSidebar(!sidebar.classList.contains('open')));
+  backdrop.addEventListener('click', ()=> toggleSidebar(false));
+
+  // --- Init ------------------------------------------------------------------
+  renderFilterCheckboxes();
+  loadHash();
+  renderAccordions();
+  </script>
+</body>
+</html>
