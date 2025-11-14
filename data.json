@@ -3,211 +3,1010 @@
     {
       "id": "refuse-boarding-trespassers",
       "title": "Refuse Boarding for Trespassers",
-      "userType": ["Pedestrian", "Bicycle"],
-      "interventionType": "Policy and Enforcement",
-      "description": "Policy to refuse boarding on trains for individuals caught trespassing at grade crossings. This enforcement measure creates a direct consequence for unauthorized crossing behavior.",
-      "notablePractices": "",
-      "advantages": "- Creates direct deterrent effect\\n- Provides enforcement mechanism\\n- Can be implemented with existing transit infrastructure",
-      "drawbacks": "- Requires coordination with transit agencies\\n- May not address root causes of trespassing\\n- Enforcement challenges and resource requirements",
-      "images": [],
-      "references": "",
-      "relatedMeasures": []
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Policy and Enforcement"
+      ],
+      "interventionStrategy": "Control",
+      "description": "Transit or rail operators refuse boarding to people observed trespassing in the right-of-way or using informal cut-throughs. This creates a direct consequence tied to the transit trip rather than only police enforcement.",
+      "notablePractices": "- Coordinate with transit police and operations control centers\n- Clearly message the policy at stations and on vehicles\n- Pair with education and engineering treatments at chronic trespass locations",
+      "advantages": "- Creates a tangible consequence for trespassing behavior\n- Can be implemented with existing fare inspection or security staff\n- Signals organizational commitment to right-of-way safety",
+      "drawbacks": "- Requires consistent documentation and due-process safeguards\n- Risk of disproportionate impacts on certain user groups\n- May be unpopular if not paired with safer legal routes",
+      "images": [
+        {
+          "src": "assets/refuse-boarding-trespassers.jpg",
+          "alt": "Refuse Boarding for Trespassers illustration",
+          "caption": "Refuse Boarding for Trespassers"
+        }
+      ],
+      "references": "Federal Railroad Administration. (2010). Community trespass prevention guide. U.S. Department of Transportation. https://railroads.dot.gov",
+      "relatedMeasures": [
+        "public-messaging",
+        "trail-sidewalk-fencing-row",
+        "anti-trespass-panels",
+        "ai-data-collection"
+      ]
     },
     {
       "id": "anti-trespass-panels",
       "title": "Anti-Trespass Panels",
-      "userType": ["Pedestrian", "Bicycle"],
-      "interventionType": "Physical Barriers",
-      "description": "Panels installed along railroad tracks to prevent unauthorized access and crossing. These barriers create a physical deterrent to trespassing behavior.",
-      "notablePractices": "",
-      "advantages": "- Physical deterrent to unauthorized access\\n- Visible barrier that clearly marks restricted areas\\n- Can be customized for specific site conditions",
-      "drawbacks": "- Ongoing maintenance requirements\\n- May not prevent determined trespassers\\n- Cost of installation and materials",
-      "images": [],
-      "references": "",
-      "relatedMeasures": ["pedestrian-specific-gate", "gate-skirts"]
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Physical Barriers",
+        "Right-of-Way Planning"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Textured, uneven surface panels installed along the ballast or shoulder near tracks to make walking across the right-of-way uncomfortable and inconvenient, discouraging casual trespass.",
+      "notablePractices": "- Install at known desire lines approaching the tracks\n- Pair with fencing and wayfinding to legal crossings\n- Maintain visibility for train crews and road users",
+      "advantages": "- Strong physical deterrent to walking along or across tracks\n- Relatively low profile and compatible with many sites\n- Can complement traditional fencing and gates",
+      "drawbacks": "- May shift trespass to adjacent locations if used alone\n- Installation and maintenance costs in harsh environments\n- Not suitable where regular maintenance access is needed on foot",
+      "images": [
+        {
+          "src": "assets/anti-trespass-panels.jpg",
+          "alt": "Anti-Trespass Panels illustration",
+          "caption": "Anti-Trespass Panels"
+        }
+      ],
+      "references": "Ogden, B. D., & Cooper, C. (2019). Highway-rail crossing handbook (3rd ed., Report No. FHWA-SA-18-040/FRA-RRS-18-01). Federal Highway Administration & Federal Railroad Administration.",
+      "relatedMeasures": [
+        "trail-sidewalk-fencing-row",
+        "hostile-landscaping",
+        "parallel-trail-along-row"
+      ]
     },
     {
       "id": "pedestrian-specific-gate",
       "title": "Pedestrian-Specific Gate",
-      "userType": "Pedestrian",
-      "interventionType": ["Infrastructure Modifications", "Physical Barriers"],
-      "description": "Gate designed specifically for pedestrian use at grade crossings. These gates are tailored to pedestrian movement patterns and can be more effective than vehicle-oriented gates for preventing unauthorized crossings.",
-      "notablePractices": "",
-      "advantages": "- Tailored to pedestrian needs and movement patterns\\n- Can be more effective than vehicle gates for pedestrian safety\\n- Allows for appropriate sizing and placement",
-      "drawbacks": "- Higher cost than standard gates\\n- Maintenance requirements\\n- May require coordination with rail operations",
-      "images": [],
-      "references": "",
-      "relatedMeasures": ["gate-skirts", "manual-swing-gates", "pedestrian-channelization"]
+      "userType": [
+        "Pedestrian"
+      ],
+      "interventionType": [
+        "Infrastructure Modifications",
+        "Physical Barriers"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Gates designed for pedestrian movements at crossings, often narrower and lower than vehicle gates, that close across sidewalks or paths when trains approach.",
+      "notablePractices": "- Coordinate timing and clearance with existing warning systems\n- Provide clear tactile and visual cues for people with disabilities\n- Avoid designs that trap users between tracks",
+      "advantages": "- Creates a very clear stop line for people on foot\n- Reduces likelihood of pedestrians entering the crossing during activation\n- Can be retrofitted at many existing crossings",
+      "drawbacks": "- Higher capital and maintenance cost than passive treatments\n- Requires reliable activation and fail-safe design\n- May be challenging in constrained urban environments",
+      "images": [
+        {
+          "src": "assets/pedestrian-specific-gate.jpg",
+          "alt": "Pedestrian-Specific Gate illustration",
+          "caption": "Pedestrian-Specific Gate"
+        }
+      ],
+      "references": "Khattak, A. J., et al. (2024). Pedestrian and bicyclist safety at highway-rail grade crossings (Year 1 report). U.S. Department of Transportation.",
+      "relatedMeasures": [
+        "gate-skirts",
+        "manual-swing-gates",
+        "pedestrian-channelization",
+        "z-gates-maze-barriers"
+      ]
     },
     {
       "id": "gate-skirts",
       "title": "Gate Skirts",
-      "userType": "Pedestrian",
-      "interventionType": "Physical Barriers",
-      "description": "Additional barriers attached to crossing gates to prevent pedestrians from ducking under or bypassing the gate. These extensions close the gap between the gate arm and the ground.",
-      "notablePractices": "",
-      "advantages": "- Prevents bypassing gates by ducking under\\n- Relatively low cost addition to existing gates\\n- Effective visual and physical barrier",
-      "drawbacks": "- Extra maintenance requirements\\n- May impede legitimate use if not properly designed\\n- Weather and wear considerations",
-      "images": [],
-      "references": "",
-      "relatedMeasures": ["pedestrian-specific-gate", "manual-swing-gates"]
+      "userType": [
+        "Pedestrian"
+      ],
+      "interventionType": [
+        "Physical Barriers"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Vertical panels or mesh attached to the underside of pedestrian or vehicle gates that close the gap between the gate arm and the ground, reducing the ability to duck under.",
+      "notablePractices": "- Use materials that are frangible or breakaway if struck\n- Ensure skirts do not snag mobility devices or bicycles\n- Coordinate with snow clearance and drainage needs",
+      "advantages": "- Simple add-on to existing active warning devices\n- Strong visual cue that the crossing is fully closed\n- Reduces common risky behavior of ducking under gates",
+      "drawbacks": "- Additional maintenance exposure to weather and impact\n- May collect debris or snow if poorly detailed\n- Not effective at uncontrolled trespass locations away from crossings",
+      "images": [
+        {
+          "src": "assets/gate-skirts.jpg",
+          "alt": "Gate Skirts illustration",
+          "caption": "Gate Skirts"
+        }
+      ],
+      "references": "Federal Railroad Administration. (2024). Highway-rail grade crossing and trespassing research. U.S. Department of Transportation.",
+      "relatedMeasures": [
+        "pedestrian-specific-gate",
+        "manual-swing-gates"
+      ]
     },
     {
       "id": "manual-swing-gates",
       "title": "Manual Swing Gates",
-      "userType": "Pedestrian",
-      "interventionType": "Physical Barriers",
-      "description": "Manually operated gates that swing closed to block pedestrian access to railroad tracks. Users must actively open and close the gate, creating a deliberate action requirement.",
-      "notablePractices": "",
-      "advantages": "- Simple mechanism with low maintenance\\n- Cost-effective solution\\n- Creates deliberate action requirement for crossing",
-      "drawbacks": "- Requires manual operation (may be left open)\\n- Dependent on user compliance\\n- May not prevent determined trespassers",
-      "images": [],
-      "references": "",
-      "relatedMeasures": ["pedestrian-specific-gate", "gate-skirts", "pedestrian-channelization"]
+      "userType": [
+        "Pedestrian"
+      ],
+      "interventionType": [
+        "Physical Barriers"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Pedestrian-scale gates that users must push open to pass through, often arranged so they self-close and require deliberate, slower movement before entering the track area.",
+      "notablePractices": "- Combine with detectable warnings and signage\n- Design for accessibility of mobility devices and strollers\n- Use robust hardware to withstand frequent use",
+      "advantages": "- Low-tech and relatively low-cost treatment\n- Forces users to slow and make a conscious decision\n- Can be used where active warning integration is not feasible",
+      "drawbacks": "- Can be propped open or defeated if not monitored\n- May be difficult for some users with limited upper body strength\n- Requires regular inspection of latches and hinges",
+      "images": [
+        {
+          "src": "assets/manual-swing-gates.jpg",
+          "alt": "Manual Swing Gates illustration",
+          "caption": "Manual Swing Gates"
+        }
+      ],
+      "references": "Ogden, B. D., & Cooper, C. (2019). Highway-rail crossing handbook (3rd ed.). Federal Highway Administration & Federal Railroad Administration.",
+      "relatedMeasures": [
+        "pedestrian-specific-gate",
+        "z-gates-maze-barriers",
+        "pedestrian-channelization"
+      ]
     },
     {
       "id": "pedestrian-channelization",
       "title": "Pedestrian Channelization",
-      "userType": "Pedestrian",
-      "interventionType": "Infrastructure Modifications",
-      "description": "Physical guidance elements such as fencing, bollards, or landscaping that direct pedestrians to designated crossing points and away from unauthorized crossing locations.",
-      "notablePractices": "",
-      "advantages": "- Guides users to safer crossing locations\\n- Reduces random or unauthorized crossing behavior\\n- Can improve overall crossing safety",
-      "drawbacks": "- May restrict movement and access\\n- Requires maintenance of channelization elements\\n- Right-of-way and design considerations",
-      "images": [],
-      "references": "",
-      "relatedMeasures": ["pedestrian-specific-gate", "crossing-alignment-adjustment"]
+      "userType": [
+        "Pedestrian"
+      ],
+      "interventionType": [
+        "Infrastructure Modifications",
+        "Right-of-Way Planning"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Use of fencing, railings, bollards, and path geometry to guide pedestrians to legal crossings and discourage informal shortcuts across the right-of-way.",
+      "notablePractices": "- Extend channelization far enough upstream to intercept desire lines\n- Maintain adequate clear width for accessibility\n- Combine with wayfinding and visibility improvements at legal crossings",
+      "advantages": "- Reduces random crossing locations along the corridor\n- Helps concentrate investment and warning devices at legal crossings\n- Can be tailored to different urban and rural contexts",
+      "drawbacks": "- Can feel restrictive or hostile if overused\n- May shift trespass to gaps in the system if not continuous\n- Requires ongoing maintenance and graffiti management",
+      "images": [
+        {
+          "src": "assets/pedestrian-channelization.jpg",
+          "alt": "Pedestrian Channelization illustration",
+          "caption": "Pedestrian Channelization"
+        }
+      ],
+      "references": "Federal Railroad Administration. (2010). Community trespass prevention guide. U.S. Department of Transportation.",
+      "relatedMeasures": [
+        "trail-sidewalk-fencing-row",
+        "z-gates-maze-barriers",
+        "parallel-trail-along-row"
+      ]
     },
     {
-      "id": "automatic-audio-warning",
-      "title": "Automatic Audio Warning",
-      "userType": "Pedestrian",
-      "interventionType": "Warning Devices",
-      "description": "Automated audio warning systems that activate when trains approach, providing audible alerts to pedestrians at grade crossings. These systems can include bells, horns, or voice announcements.",
-      "notablePractices": "",
-      "advantages": "- Provides clear auditory signal of approaching trains\\n- Accessible to visually impaired users\\n- Can be synchronized with train detection systems",
-      "drawbacks": "- Noise pollution concerns for nearby residents\\n- Potential for false alarms or system failures\\n- Requires power and maintenance",
-      "images": [],
-      "references": "",
-      "relatedMeasures": ["active-warning-device"]
+      "id": "violation-audio-warning",
+      "title": "Violation Audio Warning",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Warning Devices",
+        "Detection and Lighting"
+      ],
+      "interventionStrategy": "Control",
+      "description": "Automated audio messages or alarms triggered when people enter the track area during an active warning phase, calling out the unsafe behavior in real time.",
+      "notablePractices": "- Use clear, concise, and locally appropriate language\n- Target speakers toward the crossing to limit noise spillover\n- Consider pairing with visual messages or beacons",
+      "advantages": "- Directly addresses risky behavior at the moment it occurs\n- Audible cues can reach distracted users not watching signals\n- Provides data if integrated with logging systems",
+      "drawbacks": "- Potential noise concerns for nearby residents\n- Effectiveness may diminish if overused or triggered falsely\n- Requires power, detection equipment, and maintenance",
+      "images": [
+        {
+          "src": "assets/violation-audio-warning.jpg",
+          "alt": "Violation Audio Warning illustration",
+          "caption": "Violation Audio Warning"
+        }
+      ],
+      "references": "Li, J. Q., et al. (2025). Strategies and technologies for warning at highway\u2013rail grade crossings (NCHRP Project 17-122, Final Report). National Cooperative Highway Research Program.",
+      "relatedMeasures": [
+        "in-pavement-led-path-warning",
+        "second-train-coming-indicator",
+        "public-messaging"
+      ]
     },
     {
-      "id": "hostile-architecture",
-      "title": "Hostile Architecture",
-      "userType": ["Pedestrian", "Bicycle"],
-      "interventionType": "Physical Barriers",
-      "description": "Strategic use of landscape elements such as rock treatments, dense vegetation, or other natural barriers that discourage unauthorized crossing while maintaining aesthetic appeal.",
-      "notablePractices": "",
-      "advantages": "- Natural deterrent that blends with environment\\n- Aesthetically integrated solution\\n- Low maintenance once established",
-      "drawbacks": "- May not be fully effective against determined trespassers\\n- Requires ongoing landscape maintenance\\n- Environmental and ecological considerations",
-      "images": [],
-      "references": "",
-      "relatedMeasures": ["anti-trespass-panels", "pedestrian-channelization"]
-    },
-    {
-      "id": "crossing-alignment-adjustment",
-      "title": "Crossing Alignment Adjustment",
-      "userType": ["Pedestrian", "Bicycle"],
-      "interventionType": "Infrastructure Modifications",
-      "description": "Modifying the angle and approach of pedestrian and bicycle crossings to meet tracks at approximately 90 degrees, improving visibility and reducing crossing time.",
-      "notablePractices": "",
-      "advantages": "- Improves visibility of approaching trains\\n- Reduces crossing time and exposure\\n- Enhances user comfort and safety",
-      "drawbacks": "- Significant infrastructure changes required\\n- Right-of-way and cost impacts\\n- May require coordination with multiple stakeholders",
-      "images": [],
-      "references": "",
-      "relatedMeasures": ["path-realignment", "pedestrian-channelization", "flangeway-gap-filler"]
+      "id": "path-crossing-alignment-angle",
+      "title": "Path-Crossing Alignment Angle Adjustment",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Infrastructure Modifications",
+        "Right-of-Way Planning"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Re-aligning sidewalks or shared-use paths so that users cross the tracks at approximately a 90-degree angle, improving sight distance and reducing the chance of wheels catching in flangeways.",
+      "notablePractices": "- Provide smooth horizontal curves and adequate sight distances\n- Coordinate with refuge islands or channelization where needed\n- Ensure drainage and surface transitions remain comfortable",
+      "advantages": "- Reduces risk of wheel entrapment and falls at skewed crossings\n- Encourages users to look toward train approach directions\n- Can be combined with other geometric and surface treatments",
+      "drawbacks": "- May require additional right-of-way or reconstruction\n- Can introduce awkward path geometry if poorly designed\n- Design effort is higher than simple signing-only treatments",
+      "images": [
+        {
+          "src": "assets/path-crossing-alignment-angle.jpg",
+          "alt": "Path-Crossing Alignment Angle Adjustment illustration",
+          "caption": "Path-Crossing Alignment Angle Adjustment"
+        }
+      ],
+      "references": "Federal Railroad Administration. (2019). Highway-rail crossing handbook (3rd ed.). U.S. Department of Transportation.",
+      "relatedMeasures": [
+        "flangeway-gap-filler",
+        "bike-friendly-crossing-panels",
+        "ped-bike-refuge-island"
+      ]
     },
     {
       "id": "flangeway-gap-filler",
       "title": "Flangeway Gap Filler",
-      "userType": ["Pedestrian", "Bicycle"],
-      "interventionType": "Infrastructure Modifications",
-      "description": "Material or system used to fill the gap between rails and road surface (flangeway) to prevent bicycle wheels, wheelchair wheels, or pedestrian feet from getting caught in the gap.",
-      "notablePractices": "",
-      "advantages": "- Prevents wheel entrapment accidents\\n- Improves accessibility for wheeled users\\n- Reduces tripping hazards",
-      "drawbacks": "- Requires regular maintenance and replacement\\n- Must be compatible with rail operations\\n- Cost of materials and installation",
-      "images": [],
-      "references": "",
-      "relatedMeasures": ["crossing-alignment-adjustment", "sidewalk-pavement-markings"]
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Infrastructure Modifications",
+        "ADA"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Resilient inserts or special rail-embedded panels used to reduce the open flangeway gap at pedestrian and bicycle crossings while still accommodating train wheels.",
+      "notablePractices": "- Verify compatibility with wheel loads and track maintenance\n- Inspect regularly for damage, settlement, or ice accumulation\n- Coordinate with ADA requirements for mobility devices",
+      "advantages": "- Reduces risk of bicycle and wheelchair wheels getting caught\n- Improves comfort and confidence for non-motorized users\n- Can be retrofitted at some existing crossings",
+      "drawbacks": "- Higher installation and replacement costs than plain asphalt\n- Performance can be sensitive to climate and debris\n- Not appropriate for all track classes or speeds",
+      "images": [
+        {
+          "src": "assets/flangeway-gap-filler.jpg",
+          "alt": "Flangeway Gap Filler illustration",
+          "caption": "Flangeway Gap Filler"
+        }
+      ],
+      "references": "Harkey, D. L., et al. (2004). PEDSAFE: Pedestrian safety guide and countermeasure selection system (Report No. FHWA-SA-04-003). Federal Highway Administration.",
+      "relatedMeasures": [
+        "bike-friendly-crossing-panels",
+        "path-crossing-alignment-angle"
+      ]
     },
     {
-      "id": "lower-pedestrian-signs",
-      "title": "Lower Pedestrian Signs",
-      "userType": "Pedestrian",
-      "interventionType": "Signage and Wayfinding",
-      "description": "Signage positioned at pedestrian eye level (typically 5-7 feet) rather than vehicle height, making warnings and instructions more visible and readable for pedestrians.",
-      "notablePractices": "",
-      "advantages": "- Improved visibility and readability for pedestrians\\n- More noticeable at appropriate sight lines\\n- Can include pedestrian-specific messaging",
-      "drawbacks": "- Potential for vandalism or damage\\n- Requires strategic placement\\n- May need additional maintenance",
-      "images": [],
-      "references": "",
-      "relatedMeasures": ["sidewalk-pavement-markings"]
+      "id": "lower-pedestrian-warning-devices",
+      "title": "Lower Pedestrian Warning Devices",
+      "userType": [
+        "Pedestrian"
+      ],
+      "interventionType": [
+        "Warning Devices",
+        "Signage and Wayfinding"
+      ],
+      "interventionStrategy": "Control",
+      "description": "Pedestrian-scale flashing beacons, signals, or signs mounted closer to eye level for people on foot rather than only at vehicle height, improving noticeability of warnings.",
+      "notablePractices": "- Follow MUTCD guidance for sign placement and height\n- Avoid cluttering the approach with too many messages\n- Combine with pavement markings at the decision point",
+      "advantages": "- Makes warnings more visible in the pedestrian visual field\n- Can clarify that the device applies to sidewalk or path users\n- Relatively low-cost compared to major geometric changes",
+      "drawbacks": "- Requires power and periodic maintenance of devices\n- May be ignored if not clearly linked to train operations\n- Visual clutter can reduce effectiveness if overdone",
+      "images": [
+        {
+          "src": "assets/lower-pedestrian-warning-devices.jpg",
+          "alt": "Lower Pedestrian Warning Devices illustration",
+          "caption": "Lower Pedestrian Warning Devices"
+        }
+      ],
+      "references": "Federal Highway Administration. (2023). Manual on uniform traffic control devices for streets and highways (11th ed., Part 9: Traffic control for bicycle facilities). U.S. Department of Transportation.",
+      "relatedMeasures": [
+        "sidewalk-pavement-markings",
+        "violation-audio-warning"
+      ]
     },
     {
       "id": "sidewalk-pavement-markings",
       "title": "Sidewalk Pavement Markings",
-      "userType": "Pedestrian",
-      "interventionType": "Signage and Wayfinding",
-      "description": "Visual indicators painted or applied to sidewalk surfaces to guide pedestrians, warn of crossing locations, or provide directional cues at grade crossings.",
-      "notablePractices": "",
-      "advantages": "- Clear visual guidance at ground level\\n- Cost-effective solution\\n- Can be customized for specific messaging",
-      "drawbacks": "- Weather-related wear requiring frequent repainting\\n- May become less visible over time\\n- Surface preparation and maintenance needs",
-      "images": [],
-      "references": "",
-      "relatedMeasures": ["lower-pedestrian-signs", "pedestrian-channelization"]
+      "userType": [
+        "Pedestrian"
+      ],
+      "interventionType": [
+        "Signage and Wayfinding"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Text, symbols, or arrows applied directly to sidewalks or paths near crossings to indicate where to wait, where to look, or which route to follow to a legal crossing.",
+      "notablePractices": "- Use simple, high-contrast symbols that are intuitive\n- Place markings at the decision point, not far upstream\n- Refresh regularly where snow and de-icing wear surfaces",
+      "advantages": "- Low-cost way to reinforce desired behavior\n- Can support multilingual communication through symbols\n- Flexible and easy to pilot or adjust over time",
+      "drawbacks": "- Subject to wear and fading, especially in harsh climates\n- Less effective in low-light or cluttered conditions\n- Should not be relied on as the only treatment at high-risk sites",
+      "images": [
+        {
+          "src": "assets/sidewalk-pavement-markings.jpg",
+          "alt": "Sidewalk Pavement Markings illustration",
+          "caption": "Sidewalk Pavement Markings"
+        }
+      ],
+      "references": "Zegeer, C. V., et al. (2004). PEDSAFE: Pedestrian safety guide and countermeasure selection system (Report No. FHWA-SA-04-003). Federal Highway Administration.",
+      "relatedMeasures": [
+        "lower-pedestrian-warning-devices",
+        "pedestrian-channelization"
+      ]
     },
     {
-      "id": "active-warning-device",
-      "title": "Active Warning for Trails/Sidewalks",
-      "userType": "Pedestrian",
-      "interventionType": "Warning Devices",
-      "description": "Install **flashing beacons** or integrated warning at sidepath approaches synchronized with train detection.",
-      "notablePractices": "- Coordinate with rail signal maintainer\\n- Provide clear sight triangle\\n- Pair with channelization where needed",
-      "advantages": "- High conspicuity\\n- Supports visually-impaired users with audible options",
-      "drawbacks": "- Higher capital & maintenance cost\\n- Requires power & interconnect",
-      "images": [{"src":"assets/beacon.jpg","alt":"Sidepath beacon","caption":"Flashing beacon example"}],
-      "references": "TBD",
-      "relatedMeasures": ["trail-gates","path-detect-light"]
+      "id": "public-messaging",
+      "title": "Public Messaging",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Outreach and Education"
+      ],
+      "interventionStrategy": "Behaviour",
+      "description": "Broad communications campaigns using social media, posters, PSAs, and community outreach to remind people to stay off the tracks and use legal crossings.",
+      "notablePractices": "- Tailor messages to local audiences and common behaviors\n- Coordinate with schools, employers, and community groups\n- Reinforce messages during special events or service changes",
+      "advantages": "- Builds long-term safety culture beyond a single location\n- Can be deployed regionally at relatively low cost\n- Complements enforcement and engineering measures",
+      "drawbacks": "- Effects are diffuse and hard to measure directly\n- Less effective without visible on-the-ground changes\n- Messages can be ignored if overused or not refreshed",
+      "images": [
+        {
+          "src": "assets/public-messaging.jpg",
+          "alt": "Public Messaging illustration",
+          "caption": "Public Messaging"
+        }
+      ],
+      "references": "Operation Lifesaver, Inc. (2025). Rail safety education programs. https://oli.org",
+      "relatedMeasures": [
+        "near-miss-reporting-peds-bikes",
+        "ped-bike-crossing-risk-audit"
+      ]
     },
     {
-      "id": "school-outreach",
-      "title": "School Outreach Campaign",
-      "userType": "Pedestrian",
-      "interventionType": "Outreach and Education",
-      "description": "Develop age-appropriate **education** modules on rail safety for nearby schools.",
-      "notablePractices": "- Coordinate with district calendar\\n- Include near-miss reporting info",
-      "advantages": "- Builds long-term safety culture",
-      "drawbacks": "- Impact may be diffuse without reinforcement",
-      "images": [],
-      "references": "Operation Lifesaver.",
-      "relatedMeasures": []
+      "id": "post-incident-response",
+      "title": "Post-Incident Response",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Post-Incident Management",
+        "Risk Assessment"
+      ],
+      "interventionStrategy": "Assessment",
+      "description": "Structured protocols for responding to pedestrian or bicycle incidents or near-misses at crossings, including investigation, data collection, and follow-up improvements.",
+      "notablePractices": "- Capture consistent data on circumstances and contributing factors\n- Engage railroads, roadway agencies, and law enforcement\n- Translate findings into a documented mitigation plan",
+      "advantages": "- Ensures that serious events lead to systemic learning\n- Can reveal design and operations issues not apparent in normal conditions\n- Supports grant applications and prioritization of investments",
+      "drawbacks": "- Requires staff time and cross-agency coordination\n- May be sensitive when litigation or public controversy is involved\n- Without funding, findings may not translate into action",
+      "images": [
+        {
+          "src": "assets/post-incident-response.jpg",
+          "alt": "Post-Incident Response illustration",
+          "caption": "Post-Incident Response"
+        }
+      ],
+      "references": "Federal Railroad Administration. (2025). Highway-rail grade crossing and trespassing research. U.S. Department of Transportation.",
+      "relatedMeasures": [
+        "ped-bike-crossing-risk-audit",
+        "ai-data-collection"
+      ]
     },
     {
-      "id": "social-media",
-      "title": "Social Media Outreach Campaign",
-      "userType": "Pedestrian",
-      "interventionType": "Outreach and Education",
-      "description": "Post targetted ads.",
-      "notablePractices": "- Coordinate with social media companies.",
-      "advantages": "- Builds long-term safety culture",
-      "drawbacks": "- Impact may be diffuse without reinforcement",
-      "images": [],
-      "references": "Operation Lifesaver.",
-      "relatedMeasures": []
+      "id": "detectable-warning-surfaces",
+      "title": "Detectable Warning Surfaces at Crossings",
+      "userType": [
+        "Pedestrian"
+      ],
+      "interventionType": [
+        "Infrastructure Modifications",
+        "Warning Devices",
+        "ADA"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Truncated-dome tactile surfaces placed on approaches to tracks to provide a non-visual warning to people with vision disabilities that they are entering the track danger zone.",
+      "notablePractices": "- Place at a consistent offset from the nearest rail\n- Coordinate with local ADA standards and good practice\n- Ensure adequate contrast and drainage around the panels",
+      "advantages": "- Critical accessibility cue for blind and low-vision users\n- Clearly defines the boundary between sidewalk and track area\n- Widely understood due to use at curb ramps and stations",
+      "drawbacks": "- Poor installation can create trip or ponding issues\n- Panels may need periodic replacement when worn or damaged\n- Does not by itself prevent risky behavior by sighted users",
+      "images": [
+        {
+          "src": "assets/detectable-warning-surfaces.jpg",
+          "alt": "Detectable Warning Surfaces at Crossings illustration",
+          "caption": "Detectable Warning Surfaces at Crossings"
+        }
+      ],
+      "references": "U.S. Access Board. (2002). Americans with Disabilities Act (ADA) accessibility guidelines for buildings and facilities. U.S. Access Board.",
+      "relatedMeasures": [
+        "tactile-strips-platforms",
+        "lower-pedestrian-warning-devices"
+      ]
     },
     {
-      "id": "path-realignment",
-      "title": "Shared-Use Path Realignment",
-      "userType": "Bicycle",
-      "interventionType": "Infrastructure Modifications",
-      "description": "Realign the shared-use path to meet tracks at ~**90°** and improve sight distance.",
-      "notablePractices": "- Provide pavement markings\\n- Consider superelevation transitions",
-      "advantages": "- Improves visibility and comfort",
-      "drawbacks": "- Right-of-way and cost impacts",
-      "images": [],
-      "references": "TBD.",
-      "relatedMeasures": ["trail-gates"]
+      "id": "bike-friendly-crossing-panels",
+      "title": "Bike-Friendly Crossing Surface Panels",
+      "userType": [
+        "Bicycle",
+        "Pedestrian"
+      ],
+      "interventionType": [
+        "Infrastructure Modifications",
+        "ADA"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Rubber, composite, or concrete panels that provide a smooth, skid-resistant surface across the tracks with minimal gaps or steps that could destabilize bicycles or wheelchairs.",
+      "notablePractices": "- Coordinate panel selection with track structure and maintenance\n- Provide transitions that match adjacent pavement elevations\n- Inspect regularly for settlement and surface damage",
+      "advantages": "- Reduces single-bicycle crashes related to track crossings\n- Improves comfort for wheelchairs, strollers, and carts\n- Can reduce long-term maintenance of crossing surfaces",
+      "drawbacks": "- Higher initial cost than simple asphalt approaches\n- Requires specialized installation procedures\n- Damaged panels can quickly degrade user comfort and safety",
+      "images": [
+        {
+          "src": "assets/bike-friendly-crossing-panels.jpg",
+          "alt": "Bike-Friendly Crossing Surface Panels illustration",
+          "caption": "Bike-Friendly Crossing Surface Panels"
+        }
+      ],
+      "references": "Ogden, B. D., & Cooper, C. (2019). Highway-rail crossing handbook (3rd ed.). Federal Highway Administration & Federal Railroad Administration.",
+      "relatedMeasures": [
+        "flangeway-gap-filler",
+        "path-crossing-alignment-angle"
+      ]
+    },
+    {
+      "id": "dismount-and-walk-zone",
+      "title": "Dismount and Walk Zone",
+      "userType": [
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Policy and Enforcement",
+        "Warning Devices"
+      ],
+      "interventionStrategy": "Control",
+      "description": "Zones at complex or skewed crossings where cyclists are instructed or required to dismount and walk their bikes across the tracks for safety.",
+      "notablePractices": "- Use clear symbols and pavement markings, not just text\n- Provide a short, direct crossing distance to minimize delay\n- Consider as an interim measure until design fixes are feasible",
+      "advantages": "- Addresses high-risk geometries where quick fixes are needed\n- Simple to communicate once markings and signs are in place\n- Can reduce crash rates at problem crossings",
+      "drawbacks": "- Compliance can be low without strong design cues or enforcement\n- Can be frustrating for confident or high-volume riders\n- Does not address root geometric issues by itself",
+      "images": [
+        {
+          "src": "assets/dismount-and-walk-zone.jpg",
+          "alt": "Dismount and Walk Zone illustration",
+          "caption": "Dismount and Walk Zone"
+        }
+      ],
+      "references": "Zegeer, C. V., et al. (2004). PEDSAFE: Pedestrian safety guide and countermeasure selection system. Federal Highway Administration.",
+      "relatedMeasures": [
+        "bike-friendly-crossing-panels",
+        "path-crossing-alignment-angle",
+        "z-gates-maze-barriers"
+      ]
+    },
+    {
+      "id": "z-gates-maze-barriers",
+      "title": "Z-Gates / Maze Barriers",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Physical Barriers",
+        "Infrastructure Modifications"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Offset gates or railings that require users to make one or more turns before crossing the tracks, slowing travel and orienting them toward approaching trains.",
+      "notablePractices": "- Design to accommodate wheelchairs, cargo bikes, and trailers\n- Avoid creating pinch points that trap users between tracks\n- Combine with clear sight lines toward train approach",
+      "advantages": "- Slows users and encourages them to look for trains\n- Creates a strong visual cue that a rail crossing is ahead\n- Can be retrofitted to existing paths and sidewalks",
+      "drawbacks": "- Can impede larger mobility devices if not designed carefully\n- May be perceived as hostile or inconvenient\n- Requires regular inspection to keep gates aligned and functional",
+      "images": [
+        {
+          "src": "assets/z-gates-maze-barriers.jpg",
+          "alt": "Z-Gates / Maze Barriers illustration",
+          "caption": "Z-Gates / Maze Barriers"
+        }
+      ],
+      "references": "Ogden, B. D., & Cooper, C. (2019). Highway-rail crossing handbook (3rd ed.). Federal Highway Administration & Federal Railroad Administration.",
+      "relatedMeasures": [
+        "pedestrian-specific-gate",
+        "manual-swing-gates",
+        "pedestrian-channelization"
+      ]
+    },
+    {
+      "id": "ped-bike-refuge-island",
+      "title": "Pedestrian/Bicycle Refuge Island",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Infrastructure Modifications"
+      ],
+      "interventionStrategy": "Design",
+      "description": "A protected waiting area between tracks or traffic lanes that allows pedestrians and cyclists to cross in stages rather than all at once.",
+      "notablePractices": "- Provide detectable warnings at the track interface\n- Ensure sufficient width for bikes, strollers, and wheelchairs\n- Avoid creating sight obstructions for train crews or drivers",
+      "advantages": "- Reduces pressure to \u201cbeat the train\u201d or traffic\n- Allows users to focus on one direction of traffic at a time\n- Can be combined with medians and channelization",
+      "drawbacks": "- Requires adequate corridor width\n- Construction and drainage may be more complex\n- Must be designed to prevent trapping users between tracks",
+      "images": [
+        {
+          "src": "assets/ped-bike-refuge-island.jpg",
+          "alt": "Pedestrian/Bicycle Refuge Island illustration",
+          "caption": "Pedestrian/Bicycle Refuge Island"
+        }
+      ],
+      "references": "Blackburn, L., et al. (2022). Improving intersections for pedestrians and bicyclists (Report No. FHWA-SA-22-017). Federal Highway Administration.",
+      "relatedMeasures": [
+        "path-crossing-alignment-angle",
+        "trail-sidewalk-fencing-row"
+      ]
+    },
+    {
+      "id": "crossing-approach-lighting",
+      "title": "Path and Sidewalk Lighting at Crossings",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Detection and Lighting"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Focused lighting on sidewalks, paths, and the crossing surface that improves visibility of rails, gaps, markings, and warning devices during low-light conditions.",
+      "notablePractices": "- Aim fixtures to avoid glare for train crews and motorists\n- Use uniform lighting levels on approaches and at the crossing\n- Consider adaptive or motion-activated lighting in low-volume areas",
+      "advantages": "- Improves users\u2019 ability to see hazards and warnings at night\n- Enhances personal security near isolated crossings\n- Can extend the usable hours of trails and paths safely",
+      "drawbacks": "- Requires power supply and ongoing maintenance\n- Poorly aimed lights can cause glare or light pollution\n- Initial installation cost may be significant in remote locations",
+      "images": [
+        {
+          "src": "assets/crossing-approach-lighting.jpg",
+          "alt": "Path and Sidewalk Lighting at Crossings illustration",
+          "caption": "Path and Sidewalk Lighting at Crossings"
+        }
+      ],
+      "references": "Ogden, B. D., & Cooper, C. (2019). Highway-rail crossing handbook (3rd ed.). Federal Highway Administration & Federal Railroad Administration.",
+      "relatedMeasures": [
+        "in-pavement-led-path-warning",
+        "second-train-coming-indicator"
+      ]
+    },
+    {
+      "id": "in-pavement-led-path-warning",
+      "title": "In-Pavement LED Path Warning",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Warning Devices",
+        "Detection and Lighting"
+      ],
+      "interventionStrategy": "Control",
+      "description": "LED modules embedded in or adjacent to the path surface that flash when a train is detected, placing the warning directly in the user\u2019s line of sight.",
+      "notablePractices": "- Coordinate activation with existing train detection systems\n- Use robust, slip-resistant lenses suitable for snow and maintenance\n- Test visibility in daytime and nighttime conditions",
+      "advantages": "- Highly visible to users looking down at the path or a phone\n- Ties the warning state directly to the crossing surface\n- Can clarify which tracks or approach are active in complex layouts",
+      "drawbacks": "- Higher capital and maintenance cost than conventional signals\n- Vulnerable to damage from plows and resurfacing equipment\n- Requires careful integration with signal control logic",
+      "images": [
+        {
+          "src": "assets/in-pavement-led-path-warning.jpg",
+          "alt": "In-Pavement LED Path Warning illustration",
+          "caption": "In-Pavement LED Path Warning"
+        }
+      ],
+      "references": "Li, J. Q., et al. (2025). Strategies and technologies for warning at highway\u2013rail grade crossings (NCHRP Project 17-122, Final Report). National Cooperative Highway Research Program.",
+      "relatedMeasures": [
+        "violation-audio-warning",
+        "crossing-approach-lighting",
+        "second-train-coming-indicator"
+      ]
+    },
+    {
+      "id": "second-train-coming-indicator",
+      "title": "Second Train Coming Indicator",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Warning Devices"
+      ],
+      "interventionStrategy": "Control",
+      "description": "A supplemental indicator that activates when another train is approaching on a different track after the first train clears, warning users not to enter the crossing too early.",
+      "notablePractices": "- Use simple, unambiguous legends or symbols\n- Integrate with existing track circuits or train detection\n- Educate the public about the meaning of the indicator",
+      "advantages": "- Addresses a well-known high-risk scenario at multi-track crossings\n- Can be added to existing active warning systems\n- Helps prevent early entry when sightlines are blocked by a train",
+      "drawbacks": "- Adds complexity to design, testing, and maintenance\n- Benefits are limited at single-track locations\n- Requires user understanding to be effective",
+      "images": [
+        {
+          "src": "assets/second-train-coming-indicator.jpg",
+          "alt": "Second Train Coming Indicator illustration",
+          "caption": "Second Train Coming Indicator"
+        }
+      ],
+      "references": "Ogden, B. D., & Cooper, C. (2019). Highway-rail crossing handbook (3rd ed.). Federal Highway Administration & Federal Railroad Administration.",
+      "relatedMeasures": [
+        "in-pavement-led-path-warning",
+        "violation-audio-warning"
+      ]
+    },
+    {
+      "id": "trail-sidewalk-fencing-row",
+      "title": "Trail and Sidewalk Fencing Along ROW",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Physical Barriers",
+        "Right-of-Way Planning"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Continuous fencing or railings between trails/sidewalks and the rail right-of-way, except at legal crossings, to keep people off the tracks and ballast.",
+      "notablePractices": "- Extend fencing past the immediate crossing to intercept desire lines\n- Provide clearly signed and accessible legal crossings\n- Plan for emergency and maintenance access points",
+      "advantages": "- Strong deterrent to casual trespass along tracks\n- Helps consolidate crossing locations where treatments can be focused\n- Can reduce debris and encroachment into the right-of-way",
+      "drawbacks": "- Visually and physically separates communities if not paired with access\n- Installation and upkeep costs over long corridors\n- Fence ends or gaps can become new trespass locations",
+      "images": [
+        {
+          "src": "assets/trail-sidewalk-fencing-row.jpg",
+          "alt": "Trail and Sidewalk Fencing Along ROW illustration",
+          "caption": "Trail and Sidewalk Fencing Along ROW"
+        }
+      ],
+      "references": "Federal Railroad Administration. (2010). Community trespass prevention guide. U.S. Department of Transportation.",
+      "relatedMeasures": [
+        "anti-trespass-panels",
+        "pedestrian-channelization",
+        "parallel-trail-along-row"
+      ]
+    },
+    {
+      "id": "ped-bike-crossing-risk-audit",
+      "title": "Ped/Bike Crossing Risk Audit",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Risk Assessment"
+      ],
+      "interventionStrategy": "Assessment",
+      "description": "A structured field review process focused on pedestrian and bicycle conditions at crossings, scoring risk factors and prioritizing locations for treatment.",
+      "notablePractices": "- Use a standardized checklist informed by current guidance\n- Include observations at different times of day and year\n- Integrate audit results into capital and maintenance programs",
+      "advantages": "- Provides a systematic way to compare many crossings\n- Helps justify investments based on documented risk\n- Can incorporate community observations and near-miss data",
+      "drawbacks": "- Requires staff or consultant time to conduct\n- Results may be subjective without clear scoring guidance\n- Can be frustrating if findings are not linked to funding",
+      "images": [
+        {
+          "src": "assets/ped-bike-crossing-risk-audit.jpg",
+          "alt": "Ped/Bike Crossing Risk Audit illustration",
+          "caption": "Ped/Bike Crossing Risk Audit"
+        }
+      ],
+      "references": "Texas Department of Transportation. (2023). Pedestrian and bicycle safety resources: PEDSAFE and BIKESAFE. https://www.txdot.gov",
+      "relatedMeasures": [
+        "near-miss-reporting-peds-bikes",
+        "ai-data-collection"
+      ]
+    },
+    {
+      "id": "near-miss-reporting-peds-bikes",
+      "title": "Near-Miss Reporting for Peds/Bikes",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Post-Incident Management",
+        "Risk Assessment"
+      ],
+      "interventionStrategy": "Assessment",
+      "description": "Simple reporting tools\u2014such as QR codes, web forms, or apps\u2014that allow users to report close calls, falls, or observed risky behavior at specific crossings.",
+      "notablePractices": "- Make reporting links visible at or near crossings\n- Provide a simple form that captures time, behavior, and conditions\n- Close the feedback loop by sharing summary findings publicly",
+      "advantages": "- Captures safety concerns before serious crashes occur\n- Engages the community as partners in safety\n- Can highlight issues that crash data alone would miss",
+      "drawbacks": "- Self-reported data may be incomplete or biased\n- Requires staff capacity for data review and follow-up\n- Expectations for quick fixes may exceed available resources",
+      "images": [
+        {
+          "src": "assets/near-miss-reporting-peds-bikes.jpg",
+          "alt": "Near-Miss Reporting for Peds/Bikes illustration",
+          "caption": "Near-Miss Reporting for Peds/Bikes"
+        }
+      ],
+      "references": "Operation Lifesaver, Inc. (2025). Rail safety outreach materials. https://oli.org",
+      "relatedMeasures": [
+        "ped-bike-crossing-risk-audit",
+        "public-messaging"
+      ]
+    },
+    {
+      "id": "tactile-strips-platforms",
+      "title": "Tactile Strips at Station Platforms",
+      "userType": [
+        "Pedestrian"
+      ],
+      "interventionType": [
+        "ADA",
+        "Stations Planning",
+        "Infrastructure Modifications"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Continuous tactile warning strips along platform edges to alert passengers with vision disabilities that they are close to the platform drop-off.",
+      "notablePractices": "- Maintain consistent offset from platform edge per standards\n- Use high-contrast colors to aid low-vision users\n- Keep strips free of snow, ice, and debris",
+      "advantages": "- Essential ADA feature for safe independent travel\n- Helps prevent falls from the platform edge\n- Familiar treatment across many transit systems",
+      "drawbacks": "- Requires ongoing maintenance and periodic replacement\n- Can be slippery if the wrong materials are used\n- Does not address crowding or behavior on platforms by itself",
+      "images": [
+        {
+          "src": "assets/tactile-strips-platforms.jpg",
+          "alt": "Tactile Strips at Station Platforms illustration",
+          "caption": "Tactile Strips at Station Platforms"
+        }
+      ],
+      "references": "U.S. Access Board. (2002). Americans with Disabilities Act (ADA) accessibility guidelines for buildings and facilities. U.S. Access Board.",
+      "relatedMeasures": [
+        "station-platform-gap-fillers",
+        "no-ride-platform-rules"
+      ]
+    },
+    {
+      "id": "station-platform-gap-fillers",
+      "title": "Station Platform Gap Fillers",
+      "userType": [
+        "Pedestrian"
+      ],
+      "interventionType": [
+        "ADA",
+        "Stations Planning",
+        "Infrastructure Modifications"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Fixed or deployable elements that reduce the horizontal or vertical gap between train doors and the platform, improving access and reducing trip risk.",
+      "notablePractices": "- Coordinate design with rolling stock, door locations, and curvature\n- Provide fail-safe behavior if mechanical devices are used\n- Inspect regularly for damage or misalignment",
+      "advantages": "- Improves accessibility for wheelchair users, strollers, and people with luggage\n- Reduces risk of feet or mobility devices slipping into the gap\n- Supports level boarding where full reconstruction is not feasible",
+      "drawbacks": "- Mechanical systems can add complexity and maintenance needs\n- Not all locations can accommodate full gap reduction\n- May require operational changes to ensure trains berth precisely",
+      "images": [
+        {
+          "src": "assets/station-platform-gap-fillers.jpg",
+          "alt": "Station Platform Gap Fillers illustration",
+          "caption": "Station Platform Gap Fillers"
+        }
+      ],
+      "references": "Federal Transit Administration. (2011). Transit cooperative research program report 145: Reinventing the urban rail passenger experience.",
+      "relatedMeasures": [
+        "tactile-strips-platforms",
+        "vertical-access-ada-ramps-elevators"
+      ]
+    },
+    {
+      "id": "designated-bike-waiting-zone",
+      "title": "Designated Bike Waiting Zone at Stations",
+      "userType": [
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Stations Planning"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Clearly marked areas on platforms or concourses where people with bicycles are encouraged to wait for trains, separated from general waiting areas and boarding flows.",
+      "notablePractices": "- Place zones near doors that permit bicycle boarding\n- Provide clear pavement markings and signage\n- Coordinate with train interior layouts and bike storage policies",
+      "advantages": "- Reduces conflicts between bikes and other passengers\n- Makes expectations clear for where bikes should queue\n- Can simplify operations and speed dwell times",
+      "drawbacks": "- Requires space that may be limited at narrow platforms\n- Effectiveness depends on user awareness and compliance\n- May need adjustments as ridership patterns change",
+      "images": [
+        {
+          "src": "assets/designated-bike-waiting-zone.jpg",
+          "alt": "Designated Bike Waiting Zone at Stations illustration",
+          "caption": "Designated Bike Waiting Zone at Stations"
+        }
+      ],
+      "references": "National Association of City Transportation Officials. (2014). Transit street design guide. Island Press.",
+      "relatedMeasures": [
+        "bike-boarding-signage-wayfinding",
+        "no-ride-platform-rules"
+      ]
+    },
+    {
+      "id": "bike-boarding-signage-wayfinding",
+      "title": "Clear Signage and Wayfinding for Bike Boarding at Stations",
+      "userType": [
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Signage and Wayfinding",
+        "Stations Planning"
+      ],
+      "interventionStrategy": "Control",
+      "description": "Signs, maps, and floor markings that show where bikes may board, which train cars permit bikes, and the preferred circulation routes through stations.",
+      "notablePractices": "- Use consistent symbols for bicycles across the system\n- Provide information at entrances, ticketing, and platforms\n- Coordinate with online trip planners and printed materials",
+      "advantages": "- Reduces confusion and conflicts at doors and on platforms\n- Helps new riders understand how to bring bikes on transit\n- Can be updated incrementally as policies or operations change",
+      "drawbacks": "- Requires upkeep as operating patterns and fleets evolve\n- Overly complex signage can overwhelm users\n- Less effective without supporting station design and policies",
+      "images": [
+        {
+          "src": "assets/bike-boarding-signage-wayfinding.jpg",
+          "alt": "Clear Signage and Wayfinding for Bike Boarding at Stations illustration",
+          "caption": "Clear Signage and Wayfinding for Bike Boarding at Stations"
+        }
+      ],
+      "references": "Federal Transit Administration. (2010). Bicycle access to public transportation: A synthesis of transit practice. Transportation Research Board.",
+      "relatedMeasures": [
+        "designated-bike-waiting-zone",
+        "no-ride-platform-rules"
+      ]
+    },
+    {
+      "id": "no-ride-platform-rules",
+      "title": "No-Ride Rules on Platforms",
+      "userType": [
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Policy and Enforcement",
+        "Stations Planning"
+      ],
+      "interventionStrategy": "Control",
+      "description": "Rules, signage, and sometimes enforcement actions that require cyclists to walk, not ride, while on platforms, concourses, and station approaches.",
+      "notablePractices": "- Combine signs with pavement markings and tactile cues\n- Enforce rules consistently during busy periods\n- Communicate the rationale as protecting vulnerable users",
+      "advantages": "- Reduces collision and fall risk in crowded station areas\n- Clarifies expectations for multi-modal users\n- Complements bike channels, elevators, and other access features",
+      "drawbacks": "- Compliance may be low without design reinforcement\n- Can be perceived as unfriendly to cyclists if not well messaged\n- Requires coordination between rail operators and security staff",
+      "images": [
+        {
+          "src": "assets/no-ride-platform-rules.jpg",
+          "alt": "No-Ride Rules on Platforms illustration",
+          "caption": "No-Ride Rules on Platforms"
+        }
+      ],
+      "references": "National Association of City Transportation Officials. (2014). Transit street design guide. Island Press.",
+      "relatedMeasures": [
+        "bike-channels-on-stairs",
+        "designated-bike-waiting-zone"
+      ]
+    },
+    {
+      "id": "bike-channels-on-stairs",
+      "title": "Bike Channels on Stairs",
+      "userType": [
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Stations Planning",
+        "Infrastructure Modifications"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Narrow ramps or channels along one side of a stairway that allow users to roll a bicycle up or down while walking, rather than carrying it.",
+      "notablePractices": "- Provide adequate handrail clearance and tread depth\n- Use slip-resistant, durable materials\n- Sign channels clearly and keep them free of debris",
+      "advantages": "- Makes stations more accessible to people with bikes\n- Reduces conflicts in elevators used by wheelchair users\n- Lower cost than installing additional elevators or ramps",
+      "drawbacks": "- Not accessible for people who cannot manage stairs\n- May encourage bikes on stairs where they were previously discouraged\n- Requires careful detailing to avoid tripping hazards",
+      "images": [
+        {
+          "src": "assets/bike-channels-on-stairs.jpg",
+          "alt": "Bike Channels on Stairs illustration",
+          "caption": "Bike Channels on Stairs"
+        }
+      ],
+      "references": "Federal Highway Administration. (2006). Shared-use paths: Design, function, and safety (FHWA-HRT-05-137).",
+      "relatedMeasures": [
+        "vertical-access-ada-ramps-elevators",
+        "no-ride-platform-rules"
+      ]
+    },
+    {
+      "id": "vertical-access-ada-ramps-elevators",
+      "title": "Vertical Access Improvements \u2013 ADA Ramps and Elevators",
+      "userType": [
+        "Pedestrian"
+      ],
+      "interventionType": [
+        "ADA",
+        "Stations Planning",
+        "Infrastructure Modifications"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Fully accessible ramps and elevators that connect street, concourse, and platform levels, reducing the need for at-grade track crossings or awkward stair carries.",
+      "notablePractices": "- Design for redundancy where possible to avoid single points of failure\n- Provide clear wayfinding from street to accessible routes\n- Maintain equipment proactively to minimize downtime",
+      "advantages": "- Expands independent access for people with disabilities\n- Reduces incentives to take unsafe shortcuts across the tracks\n- Supports luggage, strollers, and other wheeled devices",
+      "drawbacks": "- High capital and lifecycle costs\n- Elevator outages can undermine reliability and trust\n- Ramps require significant space in constrained environments",
+      "images": [
+        {
+          "src": "assets/vertical-access-ada-ramps-elevators.jpg",
+          "alt": "Vertical Access Improvements \u2013 ADA Ramps and Elevators illustration",
+          "caption": "Vertical Access Improvements \u2013 ADA Ramps and Elevators"
+        }
+      ],
+      "references": "U.S. Access Board. (2006). ADA accessibility guidelines for transportation facilities. U.S. Access Board.",
+      "relatedMeasures": [
+        "tactile-strips-platforms",
+        "bike-channels-on-stairs"
+      ]
+    },
+    {
+      "id": "hostile-landscaping",
+      "title": "Hostile Landscaping",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Landscaping",
+        "Right-of-Way Planning"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Use of dense shrubs, thorny plantings, rocks, or other natural features to make it difficult and uncomfortable to cut across the right-of-way at informal trespass points.",
+      "notablePractices": "- Coordinate with ecological goals and maintenance practices\n- Avoid plantings that obscure sightlines near crossings\n- Pair with legal alternative routes or crossings",
+      "advantages": "- Provides a visually softer alternative to fencing in some contexts\n- Can blend with corridor aesthetics and habitat goals\n- Helps reinforce that the corridor is not a walkable shortcut",
+      "drawbacks": "- May be perceived as hostile or exclusionary if overdone\n- Requires ongoing vegetation management\n- Ineffective against determined trespassers on its own",
+      "images": [
+        {
+          "src": "assets/hostile-landscaping.jpg",
+          "alt": "Hostile Landscaping illustration",
+          "caption": "Hostile Landscaping"
+        }
+      ],
+      "references": "Federal Railroad Administration. (2010). Community trespass prevention guide. U.S. Department of Transportation.",
+      "relatedMeasures": [
+        "anti-trespass-panels",
+        "trail-sidewalk-fencing-row",
+        "parallel-trail-along-row"
+      ]
+    },
+    {
+      "id": "parallel-trail-along-row",
+      "title": "Parallel Trail Along ROW",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Right-of-Way Planning",
+        "Infrastructure Modifications"
+      ],
+      "interventionStrategy": "Design",
+      "description": "A separated shared-use path constructed parallel to the tracks but outside the railroad right-of-way, providing a legal, comfortable route that replaces informal walking in the ballast or along the ties.",
+      "notablePractices": "- Provide safe, well-marked connections to legal crossings\n- Maintain separation with fencing or landscaping where needed\n- Coordinate ownership, easements, and maintenance responsibilities",
+      "advantages": "- Converts trespass desire lines into safe, attractive facilities\n- Supports active transportation and first/last mile access\n- Can be integrated with greenways and linear parks",
+      "drawbacks": "- Requires right-of-way, design, and capital funding\n- May raise concerns about new users near the corridor\n- Needs clear maintenance roles between agencies",
+      "images": [
+        {
+          "src": "assets/parallel-trail-along-row.jpg",
+          "alt": "Parallel Trail Along ROW illustration",
+          "caption": "Parallel Trail Along ROW"
+        }
+      ],
+      "references": "Federal Highway Administration. (2006). Evaluation of safety, design, and operation of shared-use paths (FHWA-HRT-05-137).",
+      "relatedMeasures": [
+        "trail-sidewalk-fencing-row",
+        "pedestrian-channelization"
+      ]
+    },
+    {
+      "id": "ai-data-collection",
+      "title": "AI Data Collection",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Risk Assessment",
+        "Detection and Lighting"
+      ],
+      "interventionStrategy": "Assessment",
+      "description": "Use of fixed or train-mounted cameras and artificial intelligence to automatically detect trespass, near-miss events, or user volumes at crossings and along the right-of-way.",
+      "notablePractices": "- Protect privacy through aggregation and masking as needed\n- Validate AI outputs with field observations\n- Use findings to prioritize engineering, education, and enforcement",
+      "advantages": "- Allows continuous monitoring without full-time human observers\n- Can reveal spatial and temporal patterns of risky behavior\n- Supports data-driven grant applications and program evaluation",
+      "drawbacks": "- Requires upfront investment in hardware and analytics\n- Algorithms must be tuned to local conditions and weather\n- Data governance and privacy concerns must be addressed",
+      "images": [
+        {
+          "src": "assets/ai-data-collection.jpg",
+          "alt": "AI Data Collection illustration",
+          "caption": "AI Data Collection"
+        }
+      ],
+      "references": "Zaman, A., et al. (2019). Artificial intelligence\u2013aided automated detection of railroad trespassing events. Transportation Research Record, 2673(10), 103\u2013114.",
+      "relatedMeasures": [
+        "ped-bike-crossing-risk-audit",
+        "near-miss-reporting-peds-bikes"
+      ]
+    },
+    {
+      "id": "grade-separation",
+      "title": "Grade Separation",
+      "userType": [
+        "Pedestrian",
+        "Bicycle"
+      ],
+      "interventionType": [
+        "Infrastructure Modifications",
+        "Right-of-Way Planning"
+      ],
+      "interventionStrategy": "Design",
+      "description": "Projects that completely separate pedestrian and bicycle movements from the tracks using overpasses, underpasses, or relocated facilities, eliminating at-grade conflict.",
+      "notablePractices": "- Design approaches with good visibility, ramps, and lighting\n- Ensure routes feel safe and direct to encourage use\n- Coordinate with freight and passenger rail operations",
+      "advantages": "- Eliminates at-grade train conflict for non-motorized users\n- Reduces exposure to both train and roadway traffic\n- Can provide landmark civic spaces and connections",
+      "drawbacks": "- Very high capital cost and long delivery timelines\n- May introduce out-of-direction travel if poorly aligned\n- Requires ongoing maintenance and may have security concerns",
+      "images": [
+        {
+          "src": "assets/grade-separation.jpg",
+          "alt": "Grade Separation illustration",
+          "caption": "Grade Separation"
+        }
+      ],
+      "references": "Federal Railroad Administration & Federal Highway Administration. (2019). Highway-rail crossing handbook (3rd ed.). U.S. Department of Transportation.",
+      "relatedMeasures": [
+        "parallel-trail-along-row",
+        "ped-bike-refuge-island"
+      ]
     }
   ]
 }
-

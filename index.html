@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Grade Crossing Toolkit — Ped & Bike (Offline)</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<title>Railroad Safety Toolkit for Bikes and Pedestrians</title>
 <style>
 :root{
   --scarlet:#CC0033;
@@ -49,7 +50,7 @@ mark[data-h]{background:var(--mark);padding:0 .05em;border-radius:.2em}
   .sidebar{position:static;height:auto;max-height:none}
 }
 .logo{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin-bottom:.6rem}
-.logo img{width:150px;height:150px;object-fit:contain;border-radius:8px;border:1px solid #eee;background:#fff}
+.logo img{width:180px;height:180px;object-fit:contain;border-radius:8px;border:1px solid #eee;background:#fff}
 .field{margin-bottom:.75rem}
 .field label{font-weight:700;display:block;margin-bottom:.35rem}
 .input{width:100%;padding:.55rem .7rem;border:1px solid #c8cdd4;border-radius:10px}
@@ -64,9 +65,16 @@ legend{font-weight:700;color:#333;padding:0 .35rem}
 }
 .acc > div{padding:.75rem;background:#fff}
 .empty{padding:1rem;border:1px dashed #d7dbe3;border-radius:12px;background:#fff}
-.topic{border:1px solid var(--border);border-radius:12px;padding:.75rem;margin:.7rem 0}
-.topic .title{display:flex;align-items:center;gap:.5rem;margin:0 0 .35rem 0}
-.topic .meta{color:#555;font-size:.85rem}
+.topic{border:1px solid var(--border);border-radius:12px;padding:.75rem;margin:.7rem 0;background:#fff;transition:box-shadow .15s}
+.topic.collapsed{padding:.75rem .9rem}
+.topic-header{display:flex;align-items:center}
+.topic-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer}
+.topic-title{font-size:1.25rem;font-weight:800}
+.topic-strategy{font-size:.95rem;font-weight:600;color:var(--blue);padding:.15rem .6rem;border-radius:999px;border:1px solid rgba(11,79,156,.2);background:rgba(11,79,156,.08)}
+.topic-body{margin-top:.6rem}
+.topic.collapsed .topic-body{display:none}
+.topic-meta{color:#444;font-size:.9rem;margin-bottom:.6rem;line-height:1.45}
+.topic-meta strong{font-size:.9rem;margin-right:.35rem}
 .tabs{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.4rem}
 .tab{border:1px solid #d3d7df;background:#f4f6fb;border-radius:999px;padding:.3rem .6rem;cursor:pointer}
 .tab[aria-selected="true"]{background:#e6f0ff;border-color:#93b6ff}
@@ -98,11 +106,11 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
     <aside class="sidebar card" id="sidebar" aria-label="Filters">
       <div class="logo">
         <img src="logo.png" alt="Site logo" onerror="this.style.display='none'">
-        <div style="text-align:center"><strong>Bicycle and Pedestrian Grade Crossing Toolkit</strong></div>
+        <div style="text-align:center"><strong>Railroad Safety Toolkit for Bikes and Pedestrians</strong></div>
       </div>
 
       <div class="field">
-        <label for="kw">Custom Keyword</label>
+        <label for="kw">Search</label>
         <div style="display:flex;gap:.4rem">
           <input id="kw" class="input" type="search" placeholder="Search…" aria-label="Search">
           <button id="go" class="btn">Go</button>
@@ -112,6 +120,11 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
 
       <fieldset id="utFieldset">
         <legend>User Type</legend>
+        <!-- dynamic checkboxes here -->
+      </fieldset>
+
+      <fieldset id="isFieldset">
+        <legend>Intervention Strategy</legend>
         <!-- dynamic checkboxes here -->
       </fieldset>
 
@@ -236,12 +249,15 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
     search:'',  // keyword
     utSel: new Set(), // user type filter
     itSel: new Set(), // intervention type filter
+    isSel: new Set(), // intervention strategy filter
     openIT: new Set(), // open accordions = intervention types
+    openTopics: new Set(), // open topic cards
     activeTabs: {} // topicId -> tabName
   };
 
   // --- Build Filters ---------------------------------------------------------
   let users = [];
+  let strategies = [];
   let types = [];
   function renderFilterCheckboxes(){
     const utBox = $('#utFieldset'); utBox.innerHTML = '<legend>User Type</legend>';
@@ -250,8 +266,24 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
       const wrap = document.createElement('label'); wrap.className='checkbox';
       wrap.innerHTML = `<input type="checkbox" id="${id}" value="${u}"><span>${u}</span>`;
       utBox.appendChild(wrap);
-      wrap.querySelector('input').addEventListener('change', ()=>{
-        if(wrap.querySelector('input').checked) STATE.utSel.add(u); else STATE.utSel.delete(u);
+      const input = wrap.querySelector('input');
+      input.checked = STATE.utSel.has(u);
+      input.addEventListener('change', ()=>{
+        if(input.checked) STATE.utSel.add(u); else STATE.utSel.delete(u);
+        syncHash(); renderAccordions();
+      });
+    });
+
+    const isBox = $('#isFieldset'); isBox.innerHTML = '<legend>Intervention Strategy</legend>';
+    strategies.forEach(s=>{
+      const id = 'is_'+s.replace(/\W+/g,'');
+      const wrap = document.createElement('label'); wrap.className='checkbox';
+      wrap.innerHTML = `<input type="checkbox" id="${id}" value="${s}"><span>${s}</span>`;
+      isBox.appendChild(wrap);
+      const input = wrap.querySelector('input');
+      input.checked = STATE.isSel.has(s);
+      input.addEventListener('change', ()=>{
+        if(input.checked) STATE.isSel.add(s); else STATE.isSel.delete(s);
         syncHash(); renderAccordions();
       });
     });
@@ -262,8 +294,10 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
       const wrap = document.createElement('label'); wrap.className='checkbox';
       wrap.innerHTML = `<input type="checkbox" id="${id}" value="${u}"><span>${u}</span>`;
       itBox.appendChild(wrap);
-      wrap.querySelector('input').addEventListener('change', ()=>{
-        if(wrap.querySelector('input').checked) STATE.itSel.add(u); else STATE.itSel.delete(u);
+      const input = wrap.querySelector('input');
+      input.checked = STATE.itSel.has(u);
+      input.addEventListener('change', ()=>{
+        if(input.checked) STATE.itSel.add(u); else STATE.itSel.delete(u);
         syncHash(); renderAccordions();
       });
     });
@@ -280,9 +314,9 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
   // --- Clear filters ---------------------------------------------------------
   $('#clear').addEventListener('click', ()=>{
     STATE.search = '';
-    STATE.utSel.clear(); STATE.itSel.clear();
+    STATE.utSel.clear(); STATE.itSel.clear(); STATE.isSel.clear();
     $('#kw').value = '';
-    $$('#utFieldset input, #itFieldset input').forEach(i=>i.checked=false);
+    $$('#utFieldset input, #isFieldset input, #itFieldset input').forEach(i=>i.checked=false);
     syncHash(); renderAccordions();
   });
 
@@ -291,15 +325,17 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
     // Handle both single values and arrays
     const topicUserTypes = Array.isArray(topic.userType) ? topic.userType : [topic.userType];
     const topicInterventionTypes = Array.isArray(topic.interventionType) ? topic.interventionType : [topic.interventionType];
+    const topicStrategy = (topic.interventionStrategy || '').trim();
     
     const utOK = (STATE.utSel.size===0) || topicUserTypes.some(ut => STATE.utSel.has(ut));
     const itOK = (STATE.itSel.size===0) || topicInterventionTypes.some(it => STATE.itSel.has(it));
-    if(!utOK || !itOK) return false;
+    const isOK = (STATE.isSel.size===0) || (topicStrategy && STATE.isSel.has(topicStrategy));
+    if(!utOK || !itOK || !isOK) return false;
     if(!STATE.search) return true;
     const blob = [
-      topic.title, topicUserTypes.join(' '), topicInterventionTypes.join(' '),
+      topic.title, topicUserTypes.join(' '), topicInterventionTypes.join(' '), topicStrategy,
       topic.description, topic.notablePractices, topic.advantages,
-      topic.drawbacks, topic.references, (topic.relatedMeasures||[]).join(' ')
+      topic.drawbacks, topic.references
     ].join(' ').toLowerCase();
     return blob.includes(STATE.search.toLowerCase());
   }
@@ -392,15 +428,22 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
       return `<button class="tab" role="tab" aria-selected="${sel}" aria-controls="panel_${t.id}_${name.replace(/\s+/g,'_')}" id="tab_${t.id}_${name.replace(/\s+/g,'_')}" data-topic="${t.id}" data-tab="${name}" tabindex="${sel?'0':'-1'}">${name}</button>`;
     }).join('');
 
+    const imageBlock = (t.images||[]).length
+      ? `<div class="gallery">` + (t.images||[]).map(raw=>{
+          const img = typeof raw === 'string' ? {src: raw} : (raw||{});
+          if(!img.src) return '';
+          const caption = img.caption ? `<figcaption>${img.caption}</figcaption>` : '';
+          return `<figure><img src="${img.src}" alt="${img.alt||''}">${caption}</figure>`;
+        }).join('') + `</div>`
+      : '<p><em>No images provided.</em></p>';
+
     // Panels
     const panels = {
       'Description': mdToHtml(t.description),
       'Notable Practices': mdToHtml(t.notablePractices),
       'Advantages': mdToHtml(t.advantages),
       'Drawbacks': mdToHtml(t.drawbacks),
-      'Images': (t.images||[]).length? `<div class="gallery">`+t.images.map(img=>
-        `<figure><img src="${img.src}" alt="${img.alt||''}"><figcaption>${(img.caption||'')}</figcaption></figure>`
-      ).join('')+`</div>` : '<p><em>No images provided.</em></p>',
+      'Images': imageBlock,
       'References': mdToHtml(t.references),
       'Related Measures': (t.relatedMeasures||[]).length? `<ul>`+t.relatedMeasures.map(id=>{
         const found = DATA.find(x=>x.id===id);
@@ -415,17 +458,61 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
     }).join('');
 
     // Handle both single values and arrays for display
-    const displayUserTypes = Array.isArray(t.userType) ? t.userType : [t.userType];
-    const displayInterventionTypes = Array.isArray(t.interventionType) ? t.interventionType : [t.interventionType];
-    const metaText = `· ${displayUserTypes.join(', ')} · ${displayInterventionTypes.join(', ')}`;
-    
+    const displayUserTypes = (Array.isArray(t.userType) ? t.userType : [t.userType]).filter(Boolean);
+    const displayInterventionTypes = (Array.isArray(t.interventionType) ? t.interventionType : [t.interventionType]).filter(Boolean);
+    const metaBlocks = [];
+    if(displayInterventionTypes.length){
+      metaBlocks.push(`<div><strong>Intervention Type${displayInterventionTypes.length>1?'s':''}:</strong> ${displayInterventionTypes.join(', ')}</div>`);
+    }
+    if(displayUserTypes.length){
+      metaBlocks.push(`<div><strong>User Type${displayUserTypes.length>1?'s':''}:</strong> ${displayUserTypes.join(', ')}</div>`);
+    }
+    const metaHtml = metaBlocks.length ? `<div class="topic-meta">${metaBlocks.join('')}</div>` : '';
+    const strategy = (t.interventionStrategy || '').trim();
+    const bodyId = `topic_body_${t.id}`;
+    const forcedOpen = Boolean(STATE.search);
+    const isOpen = forcedOpen || STATE.openTopics.has(t.id);
+
     wrap.innerHTML = `
-      <h4 class="title"><span>${t.title}</span> <span class="meta">${metaText}</span></h4>
-      <div class="tabs" role="tablist" aria-label="Topic tabs for ${t.title}">
-        ${tabs}
+      <header class="topic-header">
+        <button class="topic-toggle" aria-expanded="${isOpen}" aria-controls="${bodyId}" data-topic="${t.id}">
+          <span class="topic-title">${t.title}</span>
+          ${strategy ? `<span class="topic-strategy">${strategy}</span>` : ''}
+        </button>
+      </header>
+      <div id="${bodyId}" class="topic-body" ${isOpen?'':'hidden'}>
+        ${metaHtml}
+        <div class="tabs" role="tablist" aria-label="Topic tabs for ${t.title}">
+          ${tabs}
+        </div>
+        ${panelHtml}
       </div>
-      ${panelHtml}
     `;
+    wrap.classList.toggle('collapsed', !isOpen);
+
+    const toggleBtn = $('.topic-toggle', wrap);
+    const body = $('.topic-body', wrap);
+
+    const updateOpenState = (open, {persist=true}={})=>{
+      toggleBtn.setAttribute('aria-expanded', String(open));
+      body.hidden = !open;
+      wrap.classList.toggle('collapsed', !open);
+      if(persist){
+        if(open) STATE.openTopics.add(t.id); else STATE.openTopics.delete(t.id);
+        syncHash();
+      }
+      if(open) applyHighlights(body);
+    };
+
+    if(forcedOpen){
+      updateOpenState(true, {persist:false});
+      toggleBtn.addEventListener('click', ()=> updateOpenState(true, {persist:false}));
+    } else {
+      toggleBtn.addEventListener('click', ()=>{
+        const expanded = toggleBtn.getAttribute('aria-expanded')==='true';
+        updateOpenState(!expanded);
+      });
+    }
 
     // Tab behavior
     const tabEls = $$('.tab', wrap);
@@ -433,20 +520,25 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
 
     function setActive(name){
       STATE.activeTabs[t.id]=name;
-      tabEls.forEach(btn=>{
-        const sel = btn.dataset.tab===name;
-        btn.setAttribute('aria-selected', String(sel));
-        btn.tabIndex = sel?0:-1;
-      });
-      panEls.forEach(p=>{
-        p.hidden = !p.id.endsWith(name.replace(/\s+/g,'_'));
-      });
+      if(!body.hidden){
+        tabEls.forEach(btn=>{
+          const sel = btn.dataset.tab===name;
+          btn.setAttribute('aria-selected', String(sel));
+          btn.tabIndex = sel?0:-1;
+        });
+        panEls.forEach(p=>{
+          p.hidden = !p.id.endsWith(name.replace(/\s+/g,'_'));
+        });
+      }
       syncHash();
       applyHighlights(wrap);
     }
 
     tabEls.forEach(btn=>{
-      btn.addEventListener('click', ()=> setActive(btn.dataset.tab));
+      btn.addEventListener('click', ()=> {
+        if(body.hidden) updateOpenState(true);
+        setActive(btn.dataset.tab);
+      });
       btn.addEventListener('keydown', (e)=>{
         const idx = tabEls.indexOf(document.activeElement);
         if(['ArrowRight','ArrowLeft','Home','End'].includes(e.key)){
@@ -468,12 +560,11 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
       if(!a) return;
       e.preventDefault();
       const id = a.getAttribute('data-jump');
-      // Find its intervention group and open it
       const topic = DATA.find(x=>x.id===id);
       if(topic){
-        // Handle both single values and arrays
         const interventionTypes = Array.isArray(topic.interventionType) ? topic.interventionType : [topic.interventionType];
         interventionTypes.forEach(it => STATE.openIT.add(it));
+        STATE.openTopics.add(topic.id);
         syncHash();
         renderAccordions();
         const target = document.getElementById('topic_'+id);
@@ -481,6 +572,7 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
       }
     });
 
+    if(isOpen) applyHighlights(body);
     return wrap;
   }
 
@@ -498,7 +590,9 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
     if(STATE.search) q.set('q', STATE.search);
     if(STATE.utSel.size) q.set('ut', [...STATE.utSel].join(','));
     if(STATE.itSel.size) q.set('it', [...STATE.itSel].join(','));
+    if(STATE.isSel.size) q.set('is', [...STATE.isSel].join(','));
     if(STATE.openIT.size) q.set('open', [...STATE.openIT].join(','));
+    if(STATE.openTopics.size) q.set('topics', [...STATE.openTopics].join(','));
     const tabs = Object.keys(STATE.activeTabs).map(k=>`${encodeURIComponent(k)}:${encodeURIComponent(STATE.activeTabs[k])}`);
     if(tabs.length) q.set('tabs', tabs.join('|'));
     const hash = q.toString();
@@ -509,7 +603,9 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
     STATE.search = q.get('q')||'';
     STATE.utSel = new Set((q.get('ut')||'').split(',').filter(Boolean));
     STATE.itSel = new Set((q.get('it')||'').split(',').filter(Boolean));
+    STATE.isSel = new Set((q.get('is')||'').split(',').filter(Boolean));
     STATE.openIT = new Set((q.get('open')||'').split(',').filter(Boolean));
+    STATE.openTopics = new Set((q.get('topics')||'').split(',').filter(Boolean));
     STATE.activeTabs = {};
     (q.get('tabs')||'').split('|').forEach(pair=>{
       if(!pair) return;
@@ -520,6 +616,7 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
     $('#kw').value = STATE.search;
     // reflect checkboxes
     $$('#utFieldset input').forEach(i=>{ i.checked = STATE.utSel.has(i.value); });
+    $$('#isFieldset input').forEach(i=>{ i.checked = STATE.isSel.has(i.value); });
     $$('#itFieldset input').forEach(i=>{ i.checked = STATE.itSel.has(i.value); });
   }
   window.addEventListener('hashchange', ()=>{ loadHash(); renderAccordions(); });
@@ -537,7 +634,9 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
       // Build filter lists after data is loaded
       const allUsers = DATA.flatMap(t=> Array.isArray(t.userType) ? t.userType : [t.userType]);
       const allTypes = DATA.flatMap(t=> Array.isArray(t.interventionType) ? t.interventionType : [t.interventionType]);
+      const allStrategies = DATA.map(t=> (t.interventionStrategy||'').trim()).filter(Boolean);
       users = uniq(allUsers).sort();
+      strategies = uniq(allStrategies).sort();
       types = uniq(allTypes).sort();
       
       renderFilterCheckboxes();
