@@ -37,18 +37,16 @@ mark[data-h]{background:var(--mark);padding:0 .05em;border-radius:.2em}
   max-width:1400px;margin:0 auto;display:grid;grid-template-columns:280px 1fr;gap:1rem;padding:1rem;
 }
 @media (max-width: 960px){
-  .main{grid-template-columns:1fr}
-  .sidebar{position:fixed;inset:0 40% 0 0;max-width:420px;transform:translateX(-105%);transition:transform .2s ease;z-index:50}
-  .sidebar.open{transform:none}
-  .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(1px);display:none;z-index:45}
-  .backdrop.show{display:block}
-  .filter-toggle{display:inline-flex}
-}
-@media (min-width: 961px){
-  .filter-toggle{display:none}
+  .main{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .sidebar{position:static;height:auto;max-width:none;transform:none;z-index:auto}
+  .backdrop{display:none!important}
+  .filter-toggle{display:none!important}
 }
 .sidebar{
   background:#fff;border:1px solid var(--border);border-radius:14px;padding:1rem;height:calc(100dvh - 110px);position:sticky;top:84px;overflow:auto
+}
+@media (max-width: 960px){
+  .sidebar{position:static;height:auto;max-height:none}
 }
 .logo{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem}
 .logo img{width:40px;height:40px;object-fit:contain;border-radius:8px;border:1px solid #eee;background:#fff}
@@ -92,7 +90,6 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
         <strong>34:970:556 Bicycle and Pedestrian Planning</strong> with <strong>Dr. Kelcie Ralph</strong>
       </div>
       <div class="topbar">
-        <button class="filter-toggle" id="toggleFilters" aria-controls="sidebar" aria-expanded="false">Filters</button>
       </div>
     </div>
   </header>
@@ -138,7 +135,6 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
     </main>
   </div>
 
-  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
 
   <!-- Embedded data -->
   <script type="application/json" id="data">
@@ -223,7 +219,9 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
   // Escape HTML, then apply a tiny markdown subset safely
   function mdToHtml(md){
     if(!md) return "";
-    const esc = md
+    // Convert escaped newlines (\n) to actual newlines first
+    const withNewlines = md.replace(/\\n/g, '\n');
+    const esc = withNewlines
       .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
     // links [text](url) allow http(s), mailto, #
@@ -315,8 +313,11 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
   };
 
   // --- Build Filters ---------------------------------------------------------
-  const users = uniq(DATA.map(t=>t.userType)).sort();
-  const types = uniq(DATA.map(t=>t.interventionType)).sort();
+  // Support both single values and arrays for userType and interventionType
+  const allUsers = DATA.flatMap(t=> Array.isArray(t.userType) ? t.userType : [t.userType]);
+  const allTypes = DATA.flatMap(t=> Array.isArray(t.interventionType) ? t.interventionType : [t.interventionType]);
+  const users = uniq(allUsers).sort();
+  const types = uniq(allTypes).sort();
   function renderFilterCheckboxes(){
     const utBox = $('#utFieldset'); utBox.innerHTML = '<legend>User Type</legend>';
     users.forEach(u=>{
@@ -362,12 +363,16 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
 
   // --- Filter logic ----------------------------------------------------------
   function matchFilters(topic){
-    const utOK = (STATE.utSel.size===0) || STATE.utSel.has(topic.userType);
-    const itOK = (STATE.itSel.size===0) || STATE.itSel.has(topic.interventionType);
+    // Handle both single values and arrays
+    const topicUserTypes = Array.isArray(topic.userType) ? topic.userType : [topic.userType];
+    const topicInterventionTypes = Array.isArray(topic.interventionType) ? topic.interventionType : [topic.interventionType];
+    
+    const utOK = (STATE.utSel.size===0) || topicUserTypes.some(ut => STATE.utSel.has(ut));
+    const itOK = (STATE.itSel.size===0) || topicInterventionTypes.some(it => STATE.itSel.has(it));
     if(!utOK || !itOK) return false;
     if(!STATE.search) return true;
     const blob = [
-      topic.title, topic.userType, topic.interventionType,
+      topic.title, topicUserTypes.join(' '), topicInterventionTypes.join(' '),
       topic.description, topic.notablePractices, topic.advantages,
       topic.drawbacks, topic.references, (topic.relatedMeasures||[]).join(' ')
     ].join(' ').toLowerCase();
@@ -378,9 +383,15 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
   function groupByIT(list){
     const m = new Map();
     list.forEach(t=>{
-      const k=t.interventionType;
-      if(!m.has(k)) m.set(k, []);
-      m.get(k).push(t);
+      // Handle both single values and arrays
+      const interventionTypes = Array.isArray(t.interventionType) ? t.interventionType : [t.interventionType];
+      interventionTypes.forEach(k=>{
+        if(!m.has(k)) m.set(k, []);
+        // Only add if not already in the array (avoid duplicates)
+        if(!m.get(k).some(item => item.id === t.id)) {
+          m.get(k).push(t);
+        }
+      });
     });
     [...m.values()].forEach(arr=>arr.sort(by('title')));
     return m;
@@ -478,8 +489,13 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
       return `<div id="panel_${t.id}_${name.replace(/\s+/g,'_')}" class="tabpan" role="tabpanel" aria-labelledby="tab_${t.id}_${name.replace(/\s+/g,'_')}" ${open?'':'hidden'}>${panels[name]}</div>`;
     }).join('');
 
+    // Handle both single values and arrays for display
+    const displayUserTypes = Array.isArray(t.userType) ? t.userType : [t.userType];
+    const displayInterventionTypes = Array.isArray(t.interventionType) ? t.interventionType : [t.interventionType];
+    const metaText = `· ${displayUserTypes.join(', ')} · ${displayInterventionTypes.join(', ')}`;
+    
     wrap.innerHTML = `
-      <h4 class="title"><span>${t.title}</span> <span class="meta">· ${t.userType} · ${t.interventionType}</span></h4>
+      <h4 class="title"><span>${t.title}</span> <span class="meta">${metaText}</span></h4>
       <div class="tabs" role="tablist" aria-label="Topic tabs for ${t.title}">
         ${tabs}
       </div>
@@ -530,7 +546,9 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
       // Find its intervention group and open it
       const topic = DATA.find(x=>x.id===id);
       if(topic){
-        STATE.openIT.add(topic.interventionType);
+        // Handle both single values and arrays
+        const interventionTypes = Array.isArray(topic.interventionType) ? topic.interventionType : [topic.interventionType];
+        interventionTypes.forEach(it => STATE.openIT.add(it));
         syncHash();
         renderAccordions();
         const target = document.getElementById('topic_'+id);
@@ -582,14 +600,7 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
   window.addEventListener('hashchange', ()=>{ loadHash(); renderAccordions(); });
 
   // --- Sidebar toggle on mobile ---------------------------------------------
-  const sidebar = $('#sidebar'), backdrop = $('#backdrop'), toggleBtn = $('#toggleFilters');
-  const toggleSidebar = (open)=>{
-    sidebar.classList.toggle('open', open);
-    backdrop.classList.toggle('show', open);
-    toggleBtn.setAttribute('aria-expanded', String(open));
-  };
-  toggleBtn.addEventListener('click', ()=> toggleSidebar(!sidebar.classList.contains('open')));
-  backdrop.addEventListener('click', ()=> toggleSidebar(false));
+  // Removed - sidebar now appears above content on mobile instead of being hidden
 
   // --- Init ------------------------------------------------------------------
   renderFilterCheckboxes();
