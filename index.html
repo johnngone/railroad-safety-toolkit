@@ -48,8 +48,8 @@ mark[data-h]{background:var(--mark);padding:0 .05em;border-radius:.2em}
 @media (max-width: 960px){
   .sidebar{position:static;height:auto;max-height:none}
 }
-.logo{display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem}
-.logo img{width:40px;height:40px;object-fit:contain;border-radius:8px;border:1px solid #eee;background:#fff}
+.logo{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin-bottom:.6rem}
+.logo img{width:150px;height:150px;object-fit:contain;border-radius:8px;border:1px solid #eee;background:#fff}
 .field{margin-bottom:.75rem}
 .field label{font-weight:700;display:block;margin-bottom:.35rem}
 .input{width:100%;padding:.55rem .7rem;border:1px solid #c8cdd4;border-radius:10px}
@@ -98,7 +98,7 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
     <aside class="sidebar card" id="sidebar" aria-label="Filters">
       <div class="logo">
         <img src="logo.png" alt="Site logo" onerror="this.style.display='none'">
-        <div><strong>Ped & Bike Toolkit</strong><div class="small" style="color:var(--gray)">Offline Template</div></div>
+        <div style="text-align:center"><strong>Bicycle and Pedestrian Grade Crossing Toolkit</strong></div>
       </div>
 
       <div class="field">
@@ -136,78 +136,6 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
   </div>
 
 
-  <!-- Embedded data -->
-  <script type="application/json" id="data">
-  {
-    "topics": [
-      {
-        "id": "gate-skirts",
-        "title": "Gate Skirts",
-        "userType": "Pedestrian",
-        "interventionType": "Physical Barriers",
-        "description": "Extra gates to prevent Ducking",
-        "notablePractices": "-",
-        "advantages": "Low Cost",
-        "drawbacks": "Extra Maintenance",
-        "images": [{"src":"assets/trail-gate.jpg","alt":"Staggered gates on trail","caption":"Typical layout"}],
-        "references": "",
-        "relatedMeasures": ["active-warning-device"]
-      },
-      {
-        "id": "active-warning-device",
-        "title": "Active Warning for Trails/Sidewalks",
-        "userType": "Pedestrian",
-        "interventionType": "Warning Devices",
-        "description": "Install **flashing beacons** or integrated warning at sidepath approaches synchronized with train detection.",
-        "notablePractices": "- Coordinate with rail signal maintainer\\n- Provide clear sight triangle\\n- Pair with channelization where needed",
-        "advantages": "- High conspicuity\\n- Supports visually-impaired users with audible options",
-        "drawbacks": "- Higher capital & maintenance cost\\n- Requires power & interconnect",
-        "images": [{"src":"assets/beacon.jpg","alt":"Sidepath beacon","caption":"Flashing beacon example"}],
-        "references": "TBD",
-        "relatedMeasures": ["trail-gates","path-detect-light"]
-      },
-      {
-        "id": "school-outreach",
-        "title": "School Outreach Campaign",
-        "userType": "Pedestrian",
-        "interventionType": "Outreach and Education",
-        "description": "Develop age-appropriate **education** modules on rail safety for nearby schools.",
-        "notablePractices": "- Coordinate with district calendar\\n- Include near-miss reporting info",
-        "advantages": "- Builds long-term safety culture",
-        "drawbacks": "- Impact may be diffuse without reinforcement",
-        "images": [],
-        "references": "Operation Lifesaver.",
-        "relatedMeasures": []
-      },
-	  {
-        "id": "social-media",
-        "title": "Social Media Outreach Campaign",
-        "userType": "Pedestrian",
-        "interventionType": "Outreach and Education",
-        "description": "Post targetted ads.",
-        "notablePractices": "- Coordinate with social media companies.",
-        "advantages": "- Builds long-term safety culture",
-        "drawbacks": "- Impact may be diffuse without reinforcement",
-        "images": [],
-        "references": "Operation Lifesaver.",
-        "relatedMeasures": []
-      },
-      {
-        "id": "path-realignment",
-        "title": "Shared-Use Path Realignment",
-        "userType": "Bicycle",
-        "interventionType": "Infrastructure Modifications",
-        "description": "Realign the shared-use path to meet tracks at ~**90°** and improve sight distance.",
-        "notablePractices": "- Provide pavement markings\\n- Consider superelevation transitions",
-        "advantages": "- Improves visibility and comfort",
-        "drawbacks": "- Right-of-way and cost impacts",
-        "images": [],
-        "references": "TBD.",
-        "relatedMeasures": ["trail-gates"]
-      }
-    ]
-  }
-  </script>
 
   <script>
   // --- Utilities -------------------------------------------------------------
@@ -303,7 +231,7 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
   const debounce = (fn, ms=150)=>{ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms);} };
 
   // --- State ----------------------------------------------------------------
-  const DATA = JSON.parse($('#data').textContent).topics;
+  let DATA = [];
   const STATE = {
     search:'',  // keyword
     utSel: new Set(), // user type filter
@@ -313,11 +241,8 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
   };
 
   // --- Build Filters ---------------------------------------------------------
-  // Support both single values and arrays for userType and interventionType
-  const allUsers = DATA.flatMap(t=> Array.isArray(t.userType) ? t.userType : [t.userType]);
-  const allTypes = DATA.flatMap(t=> Array.isArray(t.interventionType) ? t.interventionType : [t.interventionType]);
-  const users = uniq(allUsers).sort();
-  const types = uniq(allTypes).sort();
+  let users = [];
+  let types = [];
   function renderFilterCheckboxes(){
     const utBox = $('#utFieldset'); utBox.innerHTML = '<legend>User Type</legend>';
     users.forEach(u=>{
@@ -603,9 +528,27 @@ figcaption{padding:.45rem .6rem;font-size:.9rem;color:#444}
   // Removed - sidebar now appears above content on mobile instead of being hidden
 
   // --- Init ------------------------------------------------------------------
-  renderFilterCheckboxes();
-  loadHash();
-  renderAccordions();
+  async function init(){
+    try {
+      const response = await fetch('data.json');
+      const jsonData = await response.json();
+      DATA = jsonData.topics;
+      
+      // Build filter lists after data is loaded
+      const allUsers = DATA.flatMap(t=> Array.isArray(t.userType) ? t.userType : [t.userType]);
+      const allTypes = DATA.flatMap(t=> Array.isArray(t.interventionType) ? t.interventionType : [t.interventionType]);
+      users = uniq(allUsers).sort();
+      types = uniq(allTypes).sort();
+      
+      renderFilterCheckboxes();
+      loadHash();
+      renderAccordions();
+    } catch (error) {
+      console.error('Error loading data:', error);
+      $('#accordions').innerHTML = '<div class="empty">Error loading data. Please check that data.json exists.</div>';
+    }
+  }
+  init();
   </script>
 </body>
 </html>
